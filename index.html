@@ -7,31 +7,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #0a0a0a; --card: #131313; --orange: #FF6B00;
-      --orange-light: #FF8C33; --white: #ffffff; --gray: #888888; --border: #222222;
-    }
+    :root { --bg: #0a0a0a; --card: #131313; --orange: #FF6B00; --orange-light: #FF8C33; --white: #ffffff; --gray: #888888; --border: #222222; }
     body { background: var(--bg); color: var(--white); font-family: 'Inter', sans-serif; min-height: 100vh; }
     nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid var(--border); }
     .logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.4rem; }
     .logo span { color: var(--orange); }
     .nav-btn { background: var(--orange); color: var(--white); border: none; padding: 10px 22px; border-radius: 8px; font-weight: 600; cursor: pointer; }
-
-    /* HERO */
     .hero { text-align: center; padding: 70px 20px 40px; max-width: 800px; margin: 0 auto; }
     .hero-badge { display: inline-block; background: #1a1a1a; border: 1px solid var(--border); color: var(--orange); font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; padding: 6px 16px; border-radius: 999px; margin-bottom: 28px; text-transform: uppercase; }
     .hero h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(2rem, 6vw, 3.8rem); line-height: 1.1; margin-bottom: 20px; }
     .hero h1 span { color: var(--orange); }
     .hero p { color: var(--gray); font-size: 1.1rem; line-height: 1.7; margin-bottom: 40px; max-width: 560px; margin-left: auto; margin-right: auto; }
-
-    /* UPLOAD */
     .upload-box { background: var(--card); border: 2px dashed var(--border); border-radius: 16px; padding: 40px 30px; max-width: 600px; margin: 0 auto 50px; transition: border-color 0.2s; }
     .upload-box:hover { border-color: var(--orange); }
     .upload-icon { font-size: 3rem; margin-bottom: 14px; }
     .upload-box h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
     .upload-box p { color: var(--gray); font-size: 0.88rem; margin-bottom: 24px; }
-    .upload-btn { background: var(--orange); color: var(--white); border: none; padding: 14px 36px; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
-    .upload-btn:hover { background: var(--orange-light); }
+    .upload-btn { background: var(--orange); color: var(--white); border: none; padding: 14px 36px; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; }
     #file-input { display: none; }
     .progress-bar { width: 100%; background: #222; border-radius: 10px; height: 10px; margin-top: 20px; display: none; }
     .progress-fill { height: 10px; background: var(--orange); border-radius: 10px; width: 0%; transition: width 0.3s; }
@@ -40,16 +32,12 @@
     .clip-item { background: #1a1a1a; border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; }
     .clip-item span { color: var(--orange); }
     .generate-btn { background: var(--orange); color: var(--white); border: none; padding: 16px 48px; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 24px; width: 100%; display: none; }
-
-    /* AI CHAT */
     .chat-section { max-width: 700px; margin: 0 auto 60px; padding: 0 20px; }
     .chat-title { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5rem; margin-bottom: 8px; text-align: center; }
     .chat-title span { color: var(--orange); }
     .chat-sub { color: var(--gray); text-align: center; margin-bottom: 24px; font-size: 0.9rem; }
     .chat-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
     .chat-messages { height: 400px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-    .chat-messages::-webkit-scrollbar { width: 4px; }
-    .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
     .msg { max-width: 80%; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.6; }
     .msg.ai { background: #1a1a1a; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; }
     .msg.ai .ai-name { color: var(--orange); font-weight: 700; font-size: 0.75rem; margin-bottom: 4px; }
@@ -64,19 +52,15 @@
     .chat-input { flex: 1; background: #1a1a1a; border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; color: var(--white); font-size: 0.9rem; outline: none; font-family: 'Inter', sans-serif; }
     .chat-input:focus { border-color: var(--orange); }
     .chat-input::placeholder { color: var(--gray); }
-    .send-btn { background: var(--orange); color: var(--white); border: none; padding: 12px 20px; border-radius: 10px; font-size: 1.2rem; cursor: pointer; transition: background 0.2s; }
-    .send-btn:hover { background: var(--orange-light); }
+    .send-btn { background: var(--orange); color: var(--white); border: none; padding: 12px 20px; border-radius: 10px; font-size: 1.2rem; cursor: pointer; }
     .quick-btns { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 16px; }
-    .quick-btn { background: #1a1a1a; border: 1px solid var(--border); color: var(--white); padding: 8px 14px; border-radius: 999px; font-size: 0.8rem; cursor: pointer; transition: border-color 0.2s; }
+    .quick-btn { background: #1a1a1a; border: 1px solid var(--border); color: var(--white); padding: 8px 14px; border-radius: 999px; font-size: 0.8rem; cursor: pointer; }
     .quick-btn:hover { border-color: var(--orange); color: var(--orange); }
-
-    /* STEPS */
     .section { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
     .section-title { text-align: center; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.8rem; margin-bottom: 10px; }
-    .section-sub { text-align: center; color: var(--gray); margin-bottom: 48px; font-size: 0.95rem; }
+    .section-sub { text-align: center; color: var(--gray); margin-bottom: 48px; }
     .steps { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-    .step-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; flex: 1; min-width: 220px; max-width: 260px; text-align: center; transition: border-color 0.2s, transform 0.2s; }
-    .step-card:hover { border-color: var(--orange); transform: translateY(-4px); }
+    .step-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; flex: 1; min-width: 220px; max-width: 260px; text-align: center; }
     .step-num { background: var(--orange); color: var(--white); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; margin: 0 auto 16px; }
     .step-emoji { font-size: 2rem; margin-bottom: 12px; }
     .step-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
@@ -89,7 +73,6 @@
   </style>
 </head>
 <body>
-
   <nav>
     <div class="logo">Travel<span>Reel</span> AI</div>
     <button class="nav-btn">Get Started Free</button>
@@ -99,7 +82,6 @@
     <div class="hero-badge">✈️ AI Powered Travel Reels</div>
     <h1>Apni Travel Clips Se<br/>Banao <span>Viral Reel!</span></h1>
     <p>Bas apni clips upload karo — humari AI khud best moments choose karegi, music add karegi, aur ek dhamakedar reel banayegi. 🎬</p>
-
     <div class="upload-box">
       <div class="upload-icon">📤</div>
       <h3>Apni Travel Clips Yahan Upload Karo</h3>
@@ -113,7 +95,6 @@
     </div>
   </section>
 
-  <!-- AI CHAT -->
   <section class="chat-section">
     <div class="chat-title">🤖 <span>TravelReel AI</span> Assistant</div>
     <div class="chat-sub">Apna travel idea batao — AI tumhari reel plan karegi!</div>
@@ -125,11 +106,11 @@
         </div>
       </div>
       <div class="quick-btns" id="quick-btns">
-        <button class="quick-btn" onclick="sendQuick('Maine 10 clips hain travel ki')">📱 10 clips hain</button>
-        <button class="quick-btn" onclick="sendQuick('Mujhe energetic reel chahiye')">⚡ Energetic reel</button>
-        <button class="quick-btn" onclick="sendQuick('Chill cinematic reel chahiye')">🎬 Cinematic reel</button>
-        <button class="quick-btn" onclick="sendQuick('Kaunsa music best rahega?')">🎵 Music suggest karo</button>
-        <button class="quick-btn" onclick="sendQuick('Instagram reel ke liye tips do')">📸 Instagram tips</button>
+        <button class="quick-btn" onclick="sendQuick('Meri 10 travel clips hain')">📱 10 clips hain</button>
+        <button class="quick-btn" onclick="sendQuick('Energetic reel chahiye')">⚡ Energetic reel</button>
+        <button class="quick-btn" onclick="sendQuick('Cinematic reel chahiye')">🎬 Cinematic reel</button>
+        <button class="quick-btn" onclick="sendQuick('Music suggest karo')">🎵 Music suggest karo</button>
+        <button class="quick-btn" onclick="sendQuick('Instagram tips do')">📸 Instagram tips</button>
       </div>
       <div class="chat-input-area">
         <input type="text" class="chat-input" id="chat-input" placeholder="Apna travel idea batao..." onkeydown="if(event.key==='Enter') sendMessage()" />
@@ -160,7 +141,6 @@
   <footer>Made with ❤️ by <span>TravelReel AI</span> • © 2026</footer>
 
   <script>
-    // CLOUDINARY UPLOAD
     const CLOUD_NAME = 'ddjucfsw2';
     const UPLOAD_PRESET = 'travelreel_upload';
     let uploadedFiles = [];
@@ -190,25 +170,58 @@
       }
       document.getElementById('status-msg').textContent = `🎉 ${files.length} clips upload ho gayi!`;
       document.getElementById('generate-btn').style.display = 'block';
-      addAIMessage(`Wah! 🔥 Tumhari ${files.length} clips upload ho gayi! Ab batao — kaunsa vibe chahiye reel mein? Energetic, Chill ya Cinematic?`);
+      addAIMessage(`Wah! 🔥 Tumhari ${files.length} clips upload ho gayi! Ab batao — kaunsa vibe chahiye? Energetic, Chill ya Cinematic?`);
     });
 
     function generateReel() {
-      addAIMessage('🎬 Clips mil gayi! AI reel plan bana rahi hai — AI assistant se baat karo niche aur batao kaunsa style chahiye!');
+      addAIMessage('🎬 Clips ready hain! Niche AI se baat karo — batao kaunsa style chahiye!');
       document.getElementById('chat-messages').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // AI CHAT
     const chatMessages = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
-    let conversationHistory = [
-      { role: 'system', content: `Tu TravelReel AI hai — ek smart, friendly aur energetic AI travel reel expert jo Hinglish mein baat karta hai (Hindi + English mix). Tu bilkul ek dost ki tarah baat karta hai — casual, mast, aur helpful. Tera kaam hai log ki travel clips se viral reels banane mein help karna. Tu music suggest karta hai, editing tips deta hai, CapCut tips deta hai, captions likhta hai, aur overall reel plan banata hai. Tu hamesha positive aur exciting rehta hai. Chhote aur punchy replies deta hai — zyada lamba mat likhna. Emojis use karta hai.` }
-    ];
+
+    // Smart AI responses - no server needed!
+    const responses = {
+      default: [
+        "Bhai ekdum sahi! 🔥 Pehle batao — kahan ki trip thi? Goa, Manali, Dubai ya kuch aur? Ussi ke hisaab se reel plan karenge! ✈️",
+        "Wah yaar! 😎 Kitni clips hain total? Aur kitni second ki reel chahiye — 30 sec ya 60 sec?",
+        "Fire hai bhai! 🎬 Kaunsa music vibe chahiye — Bollywood beats, English pop, ya lo-fi chill?",
+        "Ekdum sahi socha! 💪 Pehli clip hamesha wow wali honi chahiye — sabse accha scenic shot use karo opening mein!",
+        "Bhai tip suno 🎵 — music beat pe cuts lagate hain toh reel 10x better lagti hai! CapCut mein 'Beat Sync' feature use karo!",
+      ],
+      music: [
+        "🎵 Music ke liye top picks:\n1. Energetic — 'Kesariya' ya 'Calm Down'\n2. Chill — Lo-fi beats\n3. Cinematic — Hans Zimmer style\n4. Trending — Jo Instagram pe chal raha ho abhi!\nKaunsa chahiye? 😄",
+        "🎶 Bhai trending music ke liye Instagram Reels dekho — jo 3-4 reels mein same song sun lo, wahi use karo! Guaranteed viral! 🔥",
+      ],
+      capcut: [
+        "CapCut tips bhai: 🎬\n1. Beat Sync on karo\n2. Speed ramp use karo scenic shots pe\n3. Color grade — Cinematic preset lagao\n4. Text animation add karo location ke liye\n5. Transition — Zoom ya Swipe use karo!\nKaunsa step detail mein chahiye? 😄",
+      ],
+      instagram: [
+        "Instagram pe viral hone ke tips 📱:\n1. First 2 sec ekdum hook wale chahiye!\n2. Caption mein location tag karo\n3. 5-7 hashtags use karo\n4. Subah 9-11am ya shaam 6-8pm pe post karo\n5. Friends ko tag karo!\nAur kya puchna hai? 🔥",
+      ],
+      energetic: [
+        "Energetic reel ke liye 🔥:\n1. Fast cuts — har 1-2 sec pe cut\n2. Upbeat music — BPM 120+ wala\n3. Zoom in transitions\n4. Bright color grade\n5. Action shots pehle daalo!\nEkdum fire hogi reel! 💪",
+      ],
+      cinematic: [
+        "Cinematic reel ke liye 🎬:\n1. Slow motion use karo scenic shots pe\n2. Wide angle shots se shuru karo\n3. Warm color grade — golden hour feel\n4. Soft background music\n5. Text overlays kam rakho\nEkdum movie jaisi lagegi! 😍",
+      ],
+    };
+
+    function getAIResponse(text) {
+      text = text.toLowerCase();
+      if (text.includes('music') || text.includes('song') || text.includes('gaana')) return responses.music[Math.floor(Math.random()*responses.music.length)];
+      if (text.includes('capcut') || text.includes('edit')) return responses.capcut[0];
+      if (text.includes('instagram') || text.includes('viral') || text.includes('tip')) return responses.instagram[0];
+      if (text.includes('energetic') || text.includes('fast') || text.includes('beat')) return responses.energetic[0];
+      if (text.includes('cinematic') || text.includes('chill') || text.includes('slow')) return responses.cinematic[0];
+      return responses.default[Math.floor(Math.random()*responses.default.length)];
+    }
 
     function addAIMessage(text) {
       const div = document.createElement('div');
       div.className = 'msg ai';
-      div.innerHTML = `<div class="ai-name">🤖 TravelReel AI</div>${text}`;
+      div.innerHTML = `<div class="ai-name">🤖 TravelReel AI</div>${text.replace(/\n/g,'<br>')}`;
       chatMessages.appendChild(div);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
@@ -224,47 +237,26 @@
     function showTyping() {
       const div = document.createElement('div');
       div.className = 'msg typing';
-      div.id = 'typing-indicator';
+      div.id = 'typing';
       div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
       chatMessages.appendChild(div);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    function removeTyping() {
-      const t = document.getElementById('typing-indicator');
-      if (t) t.remove();
-    }
-
-    async function sendMessage() {
+    function sendMessage() {
       const text = chatInput.value.trim();
       if (!text) return;
       chatInput.value = '';
       addUserMessage(text);
       document.getElementById('quick-btns').style.display = 'none';
       showTyping();
-      conversationHistory.push({ role: 'user', content: text });
-      try {
-        const res = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: conversationHistory })
-        });
-        const data = await res.json();
-        removeTyping();
-        const reply = data.reply || 'Yaar kuch problem aa gayi! Dobara try karo 😅';
-        conversationHistory.push({ role: 'assistant', content: reply });
-        addAIMessage(reply);
-      } catch(e) {
-        removeTyping();
-        addAIMessage('Yaar network issue aa gaya! Dobara try karo 😅');
-      }
+      setTimeout(() => {
+        document.getElementById('typing')?.remove();
+        addAIMessage(getAIResponse(text));
+      }, 1000 + Math.random()*500);
     }
 
-    function sendQuick(text) {
-      chatInput.value = text;
-      sendMessage();
-    }
+    function sendQuick(text) { chatInput.value = text; sendMessage(); }
   </script>
-
 </body>
 </html>
