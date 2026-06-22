@@ -37,7 +37,7 @@
     .chat-title span { color: var(--orange); }
     .chat-sub { color: var(--gray); text-align: center; margin-bottom: 24px; font-size: 0.9rem; }
     .chat-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-    .chat-messages { height: 400px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+    .chat-messages { height: 450px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
     .msg { max-width: 80%; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.6; }
     .msg.ai { background: #1a1a1a; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; }
     .msg.ai .ai-name { color: var(--orange); font-weight: 700; font-size: 0.75rem; margin-bottom: 4px; }
@@ -97,23 +97,24 @@
 
   <section class="chat-section">
     <div class="chat-title">🤖 <span>TravelReel AI</span> Assistant</div>
-    <div class="chat-sub">Apna travel idea batao — AI tumhari reel plan karegi!</div>
+    <div class="chat-sub">Koi bhi sawaal poocho — reel, editing, music, travel sab ke baare mein!</div>
     <div class="chat-box">
       <div class="chat-messages" id="chat-messages">
         <div class="msg ai">
           <div class="ai-name">🤖 TravelReel AI</div>
-          Haan bhai! 🔥 Main hoon TravelReel AI — tumhara personal reel expert! Batao kahan kahan ghume ho? Kitni clips hain? Main tumhari ek dhamakedar viral reel plan karta hoon! ✈️🎬
+          Haan bhai! 🔥 Main hoon TravelReel AI — tumhara personal travel reel expert! Koi bhi sawaal poocho — editing tips, music suggestions, CapCut tricks, Instagram tips, travel ideas — sab bataunga! Batao kya jaanna chahte ho? ✈️🎬
         </div>
       </div>
       <div class="quick-btns" id="quick-btns">
-        <button class="quick-btn" onclick="sendQuick('Meri 10 travel clips hain')">📱 10 clips hain</button>
-        <button class="quick-btn" onclick="sendQuick('Energetic reel chahiye')">⚡ Energetic reel</button>
-        <button class="quick-btn" onclick="sendQuick('Cinematic reel chahiye')">🎬 Cinematic reel</button>
-        <button class="quick-btn" onclick="sendQuick('Music suggest karo')">🎵 Music suggest karo</button>
-        <button class="quick-btn" onclick="sendQuick('Instagram tips do')">📸 Instagram tips</button>
+        <button class="quick-btn" onclick="sendQuick('Meri Goa trip ki 15 clips hain reel banani hai')">🏖️ Goa reel</button>
+        <button class="quick-btn" onclick="sendQuick('Best music kaunsa lagaun reel mein')">🎵 Music help</button>
+        <button class="quick-btn" onclick="sendQuick('CapCut mein reel kaise banate hain')">✂️ CapCut tips</button>
+        <button class="quick-btn" onclick="sendQuick('Instagram pe reel viral kaise karo')">📸 Viral tips</button>
+        <button class="quick-btn" onclick="sendQuick('Cinematic reel banani hai tips do')">🎬 Cinematic</button>
+        <button class="quick-btn" onclick="sendQuick('Thumbnail kaise banate hain')">🖼️ Thumbnail</button>
       </div>
       <div class="chat-input-area">
-        <input type="text" class="chat-input" id="chat-input" placeholder="Apna travel idea batao..." onkeydown="if(event.key==='Enter') sendMessage()" />
+        <input type="text" class="chat-input" id="chat-input" placeholder="Koi bhi sawaal poocho..." onkeydown="if(event.key==='Enter') sendMessage()" />
         <button class="send-btn" onclick="sendMessage()">➤</button>
       </div>
     </div>
@@ -131,11 +132,11 @@
 
   <div class="features">
     <div class="feature-pill"><span>🎵</span> Music Suggestions</div>
-    <div class="feature-pill"><span>✂️</span> Smart Editing Tips</div>
-    <div class="feature-pill"><span>🎨</span> Cinematic Style Guide</div>
+    <div class="feature-pill"><span>✂️</span> CapCut Tips</div>
+    <div class="feature-pill"><span>🎨</span> Cinematic Style</div>
     <div class="feature-pill"><span>📍</span> Location Captions</div>
     <div class="feature-pill"><span>⚡</span> Instant AI Reply</div>
-    <div class="feature-pill"><span>📱</span> Instagram Ready Tips</div>
+    <div class="feature-pill"><span>📱</span> Instagram Tips</div>
   </div>
 
   <footer>Made with ❤️ by <span>TravelReel AI</span> • © 2026</footer>
@@ -144,6 +145,7 @@
     const CLOUD_NAME = 'ddjucfsw2';
     const UPLOAD_PRESET = 'travelreel_upload';
     let uploadedFiles = [];
+    let clipCount = 0;
 
     document.getElementById('file-input').addEventListener('change', async function(e) {
       const files = Array.from(e.target.files);
@@ -168,54 +170,108 @@
           document.getElementById('progress-fill').style.width = ((i+1)/files.length*100) + '%';
         } catch(e) { console.error(e); }
       }
+      clipCount = files.length;
       document.getElementById('status-msg').textContent = `🎉 ${files.length} clips upload ho gayi!`;
       document.getElementById('generate-btn').style.display = 'block';
-      addAIMessage(`Wah! 🔥 Tumhari ${files.length} clips upload ho gayi! Ab batao — kaunsa vibe chahiye? Energetic, Chill ya Cinematic?`);
+      addAIMessage(`Wah bhai! 🔥 Tumhari ${files.length} clips upload ho gayi! Ab batao:\n\n1. Kahan ki trip thi?\n2. Kitni second ki reel chahiye?\n3. Kaunsa vibe — Energetic, Chill ya Cinematic?\n\nMain perfect reel plan bana deta hoon! 😎`);
     });
 
     function generateReel() {
-      addAIMessage('🎬 Clips ready hain! Niche AI se baat karo — batao kaunsa style chahiye!');
-      document.getElementById('chat-messages').scrollIntoView({ behavior: 'smooth' });
+      addAIMessage('🎬 Clips ready hain! Niche mujhse baat karo — batao kaunsa style chahiye aur main poora editing plan bana deta hoon!');
+      document.querySelector('.chat-section').scrollIntoView({ behavior: 'smooth' });
     }
 
     const chatMessages = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
 
-    // Smart AI responses - no server needed!
-    const responses = {
-      default: [
-        "Bhai ekdum sahi! 🔥 Pehle batao — kahan ki trip thi? Goa, Manali, Dubai ya kuch aur? Ussi ke hisaab se reel plan karenge! ✈️",
-        "Wah yaar! 😎 Kitni clips hain total? Aur kitni second ki reel chahiye — 30 sec ya 60 sec?",
-        "Fire hai bhai! 🎬 Kaunsa music vibe chahiye — Bollywood beats, English pop, ya lo-fi chill?",
-        "Ekdum sahi socha! 💪 Pehli clip hamesha wow wali honi chahiye — sabse accha scenic shot use karo opening mein!",
-        "Bhai tip suno 🎵 — music beat pe cuts lagate hain toh reel 10x better lagti hai! CapCut mein 'Beat Sync' feature use karo!",
-      ],
-      music: [
-        "🎵 Music ke liye top picks:\n1. Energetic — 'Kesariya' ya 'Calm Down'\n2. Chill — Lo-fi beats\n3. Cinematic — Hans Zimmer style\n4. Trending — Jo Instagram pe chal raha ho abhi!\nKaunsa chahiye? 😄",
-        "🎶 Bhai trending music ke liye Instagram Reels dekho — jo 3-4 reels mein same song sun lo, wahi use karo! Guaranteed viral! 🔥",
-      ],
-      capcut: [
-        "CapCut tips bhai: 🎬\n1. Beat Sync on karo\n2. Speed ramp use karo scenic shots pe\n3. Color grade — Cinematic preset lagao\n4. Text animation add karo location ke liye\n5. Transition — Zoom ya Swipe use karo!\nKaunsa step detail mein chahiye? 😄",
-      ],
-      instagram: [
-        "Instagram pe viral hone ke tips 📱:\n1. First 2 sec ekdum hook wale chahiye!\n2. Caption mein location tag karo\n3. 5-7 hashtags use karo\n4. Subah 9-11am ya shaam 6-8pm pe post karo\n5. Friends ko tag karo!\nAur kya puchna hai? 🔥",
-      ],
-      energetic: [
-        "Energetic reel ke liye 🔥:\n1. Fast cuts — har 1-2 sec pe cut\n2. Upbeat music — BPM 120+ wala\n3. Zoom in transitions\n4. Bright color grade\n5. Action shots pehle daalo!\nEkdum fire hogi reel! 💪",
-      ],
-      cinematic: [
-        "Cinematic reel ke liye 🎬:\n1. Slow motion use karo scenic shots pe\n2. Wide angle shots se shuru karo\n3. Warm color grade — golden hour feel\n4. Soft background music\n5. Text overlays kam rakho\nEkdum movie jaisi lagegi! 😍",
-      ],
-    };
+    function getAIResponse(msg) {
+      const m = msg.toLowerCase();
 
-    function getAIResponse(text) {
-      text = text.toLowerCase();
-      if (text.includes('music') || text.includes('song') || text.includes('gaana')) return responses.music[Math.floor(Math.random()*responses.music.length)];
-      if (text.includes('capcut') || text.includes('edit')) return responses.capcut[0];
-      if (text.includes('instagram') || text.includes('viral') || text.includes('tip')) return responses.instagram[0];
-      if (text.includes('energetic') || text.includes('fast') || text.includes('beat')) return responses.energetic[0];
-      if (text.includes('cinematic') || text.includes('chill') || text.includes('slow')) return responses.cinematic[0];
-      return responses.default[Math.floor(Math.random()*responses.default.length)];
+      // Greetings
+      if (m.match(/^(hi|hii|hello|hey|helo|hlo|haan|han|hna|hnji|salaam|assalam)/)) {
+        return `Haan bhai! 🔥 Kya haal hai? Main hoon TravelReel AI — tumhara personal reel expert!\n\nBatao kya help chahiye:\n🎬 Reel banani hai?\n🎵 Music chahiye?\n✂️ Editing tips?\n📸 Instagram tips?\n\nSab bataunga! 😎`;
+      }
+
+      // How are you
+      if (m.match(/(kaise ho|kya haal|kaisa hai|how are you)/)) {
+        return `Ekdum mast hoon bhai! 🔥 Ready hoon tumhari reel ko viral karne ke liye!\n\nTum batao — kya plan hai aaj? Koi nai trip ki clips hain? 😄✈️`;
+      }
+
+      // Who are you
+      if (m.match(/(kaun ho|who are you|kya ho|tumhara naam)/)) {
+        return `Main hoon TravelReel AI! 🤖✈️\n\nMaine banaya hai specially travelers ke liye — jo apni trip ki clips se viral reels banana chahte hain!\n\nMain help karta hoon:\n🎬 Reel planning\n🎵 Music suggestions\n✂️ Editing tips\n📱 Instagram growth\n📍 Caption ideas\n\nBolo kya chahiye? 😎🔥`;
+      }
+
+      // Music
+      if (m.match(/(music|song|gaana|audio|sound|beat)/)) {
+        const locations = m.includes('goa') ? 'Goa' : m.includes('manali') ? 'Manali' : m.includes('dubai') ? 'Dubai' : m.includes('kashmir') ? 'Kashmir' : 'travel';
+        return `🎵 ${locations} trip ke liye best music:\n\n⚡ Energetic vibes:\n• Kesariya (Brahmastra)\n• Calm Down (Rema)\n• Levitating (Dua Lipa)\n\n🌊 Chill vibes:\n• Lo-fi beats (YouTube pe free milte hain)\n• Tum Hi Ho (acoustic)\n• Golden Hour\n\n🎬 Cinematic:\n• Hans Zimmer tracks\n• Time (Inception)\n• Interstellar theme\n\n💡 Pro tip: Jo Instagram pe 3-4 reels mein same song sun lo — wahi trending hai, use karo! Algorithm push karta hai! 🚀`;
+      }
+
+      // CapCut
+      if (m.match(/(capcut|cap cut|editing|edit kaise|kaise banate)/)) {
+        return `✂️ CapCut mein reel banane ka full plan:\n\n1️⃣ Clips import karo\n2️⃣ Music add karo pehle\n3️⃣ "Beat Sync" on karo — auto cut hoga!\n4️⃣ Speed ramp use karo scenic shots pe\n5️⃣ Color grade — "Cinematic" preset\n6️⃣ Text add karo location ke liye\n7️⃣ Transitions — Zoom ya Swipe\n8️⃣ 9:16 ratio mein export karo\n\n💡 Pro tip: Opening 2 second mein sabse wow wali clip daalo! Warna log scroll kar denge! 🔥`;
+      }
+
+      // Instagram viral
+      if (m.match(/(instagram|viral|views|followers|trending|reach)/)) {
+        return `📱 Instagram pe viral hone ke secret tips:\n\n⏰ Best time: Subah 9-11am ya Shaam 6-9pm\n\n📝 Caption formula:\n• Hook line (interesting)\n• Story (2-3 lines)\n• CTA (save karo, share karo)\n\n#️⃣ Hashtags (5-7 kafi hain):\n#travel #travelreels #indiatravel #reelsinstagram + location hashtag\n\n🎯 Extra tips:\n• Friends ko tag karo\n• Story pe share karo\n• First 30 min mein comments ka reply karo fast!\n• Location tag zaroor karo\n\n🚀 Yeh sab karo — views guarantee badhenge!`;
+      }
+
+      // Cinematic
+      if (m.match(/(cinematic|filmy|movie|slow motion|slo mo)/)) {
+        return `🎬 Cinematic reel banane ka formula:\n\n📸 Shots:\n• Wide angle se shuru karo\n• Slow motion scenic shots\n• Golden hour footage best lagti hai\n• Drone shots ho toh wow!\n\n🎨 Color grade:\n• Warm tones — orange/yellow\n• Contrast thoda badhao\n• CapCut mein "Cinematic" preset use karo\n\n🎵 Music:\n• Soft instrumental\n• Build up wala song\n• Lyrics kam, music zyada\n\n✂️ Editing:\n• Long cuts rakho (2-4 sec per clip)\n• Smooth transitions\n• Text kam rakho\n\nEkdum movie jaisi lagegi bhai! 😍🔥`;
+      }
+
+      // Energetic
+      if (m.match(/(energetic|fast|hype|party|dance|dhoom)/)) {
+        return `⚡ Energetic reel ka formula:\n\n🎵 Music:\n• BPM 120+ wala song\n• Drop pe cut karo\n• Beat sync on karo\n\n✂️ Editing:\n• Har 1-2 second pe cut\n• Zoom in/out transitions\n• Flash effect use karo\n• Speed up some clips (1.2x-1.5x)\n\n🎨 Color:\n• Bright aur vibrant\n• High contrast\n• Saturation badhao\n\n📱 Format:\n• 0-2 sec: Hook clip\n• 2-20 sec: Best moments\n• 20-30 sec: Grand ending\n\nLog dekhna band nahi kar paayenge! 🔥💪`;
+      }
+
+      // Thumbnail
+      if (m.match(/(thumbnail|cover|preview)/)) {
+        return `🖼️ Perfect thumbnail ke tips:\n\n✅ Kya karo:\n• Sabse colorful/dramatic frame choose karo\n• Face dikh raha ho toh best\n• Text add karo — bold aur readable\n• Bright aur high contrast\n\n❌ Kya mat karo:\n• Dark ya blurry frame\n• Boring landscape shot\n• Zyada text\n\n💡 Tools:\n• CapCut mein thumbnail feature hai\n• Canva pe bhi bana sakte ho free mein\n\nEk accha thumbnail views 2x kar deta hai! 😎`;
+      }
+
+      // Goa
+      if (m.match(/(goa|beach|samudra|sea|ocean)/)) {
+        return `🏖️ Goa reel ke liye perfect plan:\n\n📸 Must-have shots:\n• Sunset at beach\n• Water sports action\n• Food shots (seafood!)\n• Night market vibes\n• Old Goa churches\n\n🎵 Music:\n• Reggaeton ya tropical beats\n• "Smooth Operator" type chill vibes\n• Ya koi trending song\n\n✂️ Editing style:\n• Warm color grade\n• 30-45 second reel\n• Beach shots slow motion mein\n\n📝 Caption idea:\n"Goa never disappoints 🌊☀️ #Goa #BeachVibes #Travel"\n\nKitni clips hain tumhare paas? 😄`;
+      }
+
+      // Manali/Mountains
+      if (m.match(/(manali|mountains|pahad|snow|kashmir|himachal|shimla)/)) {
+        return `🏔️ Mountains reel ke liye:\n\n📸 Must shots:\n• Snow-capped peaks\n• Adventure activities\n• Cozy cafe moments\n• Sunset from top\n• Road trip clips\n\n🎵 Music:\n• Acoustic guitar\n• "The Nights" by Avicii\n• Epic cinematic music\n\n✂️ Style:\n• Cinematic slow motion\n• Wide angle shots\n• Cool blue color grade\n\n📝 Caption:\n"Mountains are calling 🏔️❄️ #Manali #TravelIndia"\n\nBahut acchi reel banegi! 😍🔥`;
+      }
+
+      // Dubai/International
+      if (m.match(/(dubai|international|foreign|abroad|europe|london|paris|thailand)/)) {
+        return `🌍 International trip reel tips:\n\n📸 Must shots:\n• Iconic landmarks\n• Local food shots\n• Hotel/resort shots\n• Night city lights\n• Airport/flight shots\n\n🎵 Music:\n• International trending songs\n• Upbeat pop\n• Ya luxury vibes — R&B type\n\n✂️ Style:\n• Glamorous editing\n• High production feel\n• Smooth transitions\n\n📝 Caption:\n"Living the dream ✈️🌟 #Dubai #Travel #Wanderlust"\n\nLogon ki jawaan toot jaayegi! 😎🔥`;
+      }
+
+      // How many clips / reel length
+      if (m.match(/(kitni clips|how many|30 sec|60 sec|1 min|kitna lamba)/)) {
+        return `📏 Reel length guide:\n\n⚡ 15-30 seconds:\n• 5-8 clips best\n• Fast cuts\n• Hook karna easy\n\n🎬 30-60 seconds:\n• 10-15 clips\n• Mix of slow + fast\n• Story bata sakte ho\n\n📺 60-90 seconds:\n• 15-25 clips\n• Full trip cover\n• Detailed storytelling\n\n💡 Instagram ke liye 15-30 sec reels sabse zyada viral hoti hain!\n\nTumhare paas kitni clips hain? Main perfect plan bana deta hoon! 😄`;
+      }
+
+      // Paise/money/monetize
+      if (m.match(/(paise|money|earn|income|monetize|kamao)/)) {
+        return `💰 Travel content se paise kamane ke tarike:\n\n1️⃣ Instagram Collab:\n• 10K+ followers pe brand deals\n• Travel brands, hotels, airlines\n• ₹5,000 - ₹50,000 per post\n\n2️⃣ YouTube:\n• Travel vlogs banao\n• AdSense se paise\n• 1000 subscribers ke baad\n\n3️⃣ Affiliate Marketing:\n• Booking.com, MakeMyTrip links\n• Har booking pe commission\n\n4️⃣ Freelance Editing:\n• Dusron ki reels edit karo\n• ₹500 - ₹5000 per reel\n\n🚀 Pehle content banao consistently — paise khud aayenge! 💪`;
+      }
+
+      // Thank you
+      if (m.match(/(thank|shukriya|thanks|dhanyawad|acha|accha|badiya|badhiya)/)) {
+        return `Arre yaar! 😄 Yeh toh mera kaam hai! 🔥\n\nAur kuch puchna hai? Music, editing, Instagram — koi bhi sawaal poocho! Main hoon yahan! ✈️🎬`;
+      }
+
+      // Default smart responses
+      const defaults = [
+        `Bhai ekdum sahi sawaal! 🔥 Thoda aur detail mein batao — kahan ki trip thi aur kitni clips hain? Main perfect reel plan bana deta hoon! ✈️`,
+        `Interesting bhai! 😎 Yeh batao — reel Instagram ke liye hai ya YouTube? Dono ke liye alag strategy hoti hai! Batao kaunsa platform? 📱`,
+        `Wah bhai! 🎬 Pehle yeh bolo — tumhara style kya hai? Energetic party vibe, chill cinematic, ya romantic travel? Ussi ke hisaab se sab suggest karunga! 😄`,
+        `Ekdum sahi pooch rahe ho! 💪 Lekin ek kaam karo — apni best 3 clips kaun si hain batao, main batata hoon kaise use karni hain reel mein! 🔥`,
+        `Fire question bhai! 🔥 Yeh toh batao pehle — kab ki trip thi? Recent hai toh trending music use karo, purani hai toh timeless songs best rahenge! 🎵`,
+      ];
+      return defaults[Math.floor(Math.random() * defaults.length)];
     }
 
     function addAIMessage(text) {
@@ -253,7 +309,7 @@
       setTimeout(() => {
         document.getElementById('typing')?.remove();
         addAIMessage(getAIResponse(text));
-      }, 1000 + Math.random()*500);
+      }, 800 + Math.random()*600);
     }
 
     function sendQuick(text) { chatInput.value = text; sendMessage(); }
