@@ -7,9 +7,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --bg: #0a0a0a; --card: #131313; --orange: #FF6B00; --orange-light: #FF8C33; --white: #ffffff; --gray: #888888; --border: #222222; }
+    :root { --bg: #0a0a0a; --card: #131313; --orange: #FF6B00; --orange-light: #FF8C33; --white: #ffffff; --gray: #888888; --border: #222222; --green: #00C853; }
     body { background: var(--bg); color: var(--white); font-family: 'Inter', sans-serif; min-height: 100vh; }
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid var(--border); }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 100; }
     .logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.4rem; }
     .logo span { color: var(--orange); }
     .nav-btn { background: var(--orange); color: var(--white); border: none; padding: 10px 22px; border-radius: 8px; font-weight: 600; cursor: pointer; }
@@ -18,26 +18,51 @@
     .hero h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(2rem, 6vw, 3.8rem); line-height: 1.1; margin-bottom: 20px; }
     .hero h1 span { color: var(--orange); }
     .hero p { color: var(--gray); font-size: 1.1rem; line-height: 1.7; margin-bottom: 40px; max-width: 560px; margin-left: auto; margin-right: auto; }
-    .upload-box { background: var(--card); border: 2px dashed var(--border); border-radius: 16px; padding: 40px 30px; max-width: 600px; margin: 0 auto 50px; transition: border-color 0.2s; }
+
+    /* UPLOAD */
+    .upload-box { background: var(--card); border: 2px dashed var(--border); border-radius: 16px; padding: 40px 30px; max-width: 650px; margin: 0 auto 30px; transition: border-color 0.2s; }
     .upload-box:hover { border-color: var(--orange); }
     .upload-icon { font-size: 3rem; margin-bottom: 14px; }
     .upload-box h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
     .upload-box p { color: var(--gray); font-size: 0.88rem; margin-bottom: 24px; }
-    .upload-btn { background: var(--orange); color: var(--white); border: none; padding: 14px 36px; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+    .upload-btn { background: var(--orange); color: var(--white); border: none; padding: 14px 36px; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .upload-btn:hover { background: var(--orange-light); }
     #file-input { display: none; }
-    .progress-bar { width: 100%; background: #222; border-radius: 10px; height: 10px; margin-top: 20px; display: none; }
-    .progress-fill { height: 10px; background: var(--orange); border-radius: 10px; width: 0%; transition: width 0.3s; }
-    .status-msg { margin-top: 14px; color: var(--orange); font-weight: 600; display: none; }
-    .uploaded-clips { margin-top: 20px; text-align: left; display: none; }
+    .progress-bar { width: 100%; background: #222; border-radius: 10px; height: 8px; margin-top: 20px; display: none; }
+    .progress-fill { height: 8px; background: var(--orange); border-radius: 10px; width: 0%; transition: width 0.3s; }
+    .status-msg { margin-top: 12px; color: var(--orange); font-weight: 600; font-size: 0.9rem; display: none; }
+    .uploaded-clips { margin-top: 16px; text-align: left; display: none; }
     .clip-item { background: #1a1a1a; border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; }
-    .clip-item span { color: var(--orange); }
-    .generate-btn { background: var(--orange); color: var(--white); border: none; padding: 16px 48px; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 24px; width: 100%; display: none; }
+    .clip-item .ci { color: var(--green); }
+
+    /* REEL PLAN GENERATOR */
+    .plan-section { max-width: 650px; margin: 0 auto 50px; padding: 0 20px; display: none; }
+    .plan-box { background: var(--card); border: 1px solid var(--orange); border-radius: 16px; padding: 28px; }
+    .plan-box h2 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.3rem; margin-bottom: 20px; color: var(--orange); }
+    .plan-form { display: flex; flex-direction: column; gap: 14px; }
+    .plan-form label { font-size: 0.85rem; color: var(--gray); margin-bottom: 4px; display: block; }
+    .plan-form select, .plan-form input { width: 100%; background: #1a1a1a; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; color: var(--white); font-size: 0.9rem; outline: none; font-family: 'Inter', sans-serif; }
+    .plan-form select:focus, .plan-form input:focus { border-color: var(--orange); }
+    .plan-form select option { background: #1a1a1a; }
+    .generate-plan-btn { background: var(--orange); color: var(--white); border: none; padding: 16px; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; width: 100%; margin-top: 8px; }
+    .generate-plan-btn:hover { background: var(--orange-light); }
+
+    /* REEL SCRIPT OUTPUT */
+    .script-output { display: none; margin-top: 24px; }
+    .script-card { background: #0f0f0f; border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 12px; }
+    .script-card h4 { color: var(--orange); font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .script-card p { color: var(--white); font-size: 0.9rem; line-height: 1.6; }
+    .copy-btn { background: transparent; border: 1px solid var(--orange); color: var(--orange); padding: 8px 16px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; margin-top: 12px; }
+    .copy-btn:hover { background: var(--orange); color: var(--white); }
+    .download-script-btn { background: var(--green); color: var(--white); border: none; padding: 14px 28px; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer; width: 100%; margin-top: 16px; }
+
+    /* CHAT */
     .chat-section { max-width: 700px; margin: 0 auto 60px; padding: 0 20px; }
     .chat-title { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5rem; margin-bottom: 8px; text-align: center; }
     .chat-title span { color: var(--orange); }
     .chat-sub { color: var(--gray); text-align: center; margin-bottom: 24px; font-size: 0.9rem; }
     .chat-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-    .chat-messages { height: 500px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+    .chat-messages { height: 450px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
     .msg { max-width: 82%; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.7; }
     .msg.ai { background: #1a1a1a; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; }
     .msg.ai .ai-name { color: var(--orange); font-weight: 700; font-size: 0.75rem; margin-bottom: 6px; }
@@ -56,11 +81,12 @@
     .quick-btns { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 16px; }
     .quick-btn { background: #1a1a1a; border: 1px solid var(--border); color: var(--white); padding: 8px 14px; border-radius: 999px; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
     .quick-btn:hover { border-color: var(--orange); color: var(--orange); }
+
     .section { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
     .section-title { text-align: center; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.8rem; margin-bottom: 10px; }
     .section-sub { text-align: center; color: var(--gray); margin-bottom: 48px; }
     .steps { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-    .step-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; flex: 1; min-width: 220px; max-width: 260px; text-align: center; transition: all 0.2s; }
+    .step-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; flex: 1; min-width: 200px; max-width: 240px; text-align: center; transition: all 0.2s; }
     .step-card:hover { border-color: var(--orange); transform: translateY(-4px); }
     .step-num { background: var(--orange); color: var(--white); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; margin: 0 auto 16px; }
     .step-emoji { font-size: 2rem; margin-bottom: 12px; }
@@ -82,54 +108,87 @@
   <section class="hero">
     <div class="hero-badge">✈️ World's Smartest Travel Reel AI</div>
     <h1>Apni Travel Clips Se<br/>Banao <span>Viral Reel!</span></h1>
-    <p>Bas apni clips upload karo — AI tumhari trip analyze karegi, best moments choose karegi, music suggest karegi aur ek dhamakedar viral reel plan banayegi! 🎬</p>
+    <p>Clips upload karo → AI tera complete editing plan banayega → CapCut mein follow karo → Viral reel ready! 🎬🔥</p>
     <div class="upload-box">
       <div class="upload-icon">📤</div>
-      <h3>Apni Travel Clips Yahan Upload Karo</h3>
-      <p>MP4, MOV, AVI support • Multiple clips • Max 500MB</p>
+      <h3>Step 1: Apni Travel Clips Upload Karo</h3>
+      <p>MP4, MOV support • Multiple clips • Max 500MB</p>
       <input type="file" id="file-input" accept="video/*" multiple />
       <button class="upload-btn" onclick="document.getElementById('file-input').click()">+ Clips Upload Karo</button>
       <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
       <div class="status-msg" id="status-msg"></div>
       <div class="uploaded-clips" id="uploaded-clips"></div>
-      <button class="generate-btn" id="generate-btn" onclick="generateReel()">🎬 Reel Plan Banao!</button>
     </div>
   </section>
 
+  <!-- REEL PLAN GENERATOR -->
+  <div class="plan-section" id="plan-section">
+    <div class="plan-box">
+      <h2>🤖 Step 2: AI Editing Plan Generator</h2>
+      <div class="plan-form">
+        <div>
+          <label>📍 Destination / Location</label>
+          <input type="text" id="destination" placeholder="Jaise: Goa, Manali, Dubai, Thailand..." />
+        </div>
+        <div>
+          <label>🎬 Reel Style</label>
+          <select id="style">
+            <option value="energetic">⚡ Energetic & Hype</option>
+            <option value="cinematic">🎬 Cinematic & Moody</option>
+            <option value="chill">🌊 Chill & Aesthetic</option>
+            <option value="romantic">💕 Romantic & Soft</option>
+            <option value="adventure">🏔️ Adventure & Epic</option>
+          </select>
+        </div>
+        <div>
+          <label>⏱️ Reel Length</label>
+          <select id="length">
+            <option value="15">15 seconds (Highest viral)</option>
+            <option value="30" selected>30 seconds (Best balance)</option>
+            <option value="60">60 seconds (Full story)</option>
+            <option value="90">90 seconds (Detailed)</option>
+          </select>
+        </div>
+        <div>
+          <label>📱 Platform</label>
+          <select id="platform">
+            <option value="instagram">Instagram Reels</option>
+            <option value="youtube">YouTube Shorts</option>
+            <option value="tiktok">TikTok</option>
+          </select>
+        </div>
+        <button class="generate-plan-btn" onclick="generatePlan()">🚀 AI Editing Plan Generate Karo!</button>
+      </div>
+
+      <div class="script-output" id="script-output"></div>
+    </div>
+  </div>
+
+  <!-- CHAT -->
   <section class="chat-section">
-    <div class="chat-title">🤖 <span>TravelReel AI</span> — World Class Assistant</div>
-    <div class="chat-sub">Editing • Music • Destinations • Instagram • YouTube • TikTok • Color Grade • Drone • Wedding • Food — Sab Kuch!</div>
+    <div class="chat-title">🤖 <span>TravelReel AI</span> Assistant</div>
+    <div class="chat-sub">Editing • Music • Destinations • Instagram • YouTube • Color Grade • Drone • Wedding — Sab Kuch!</div>
     <div class="chat-box">
       <div class="chat-messages" id="chat-messages">
         <div class="msg ai">
           <div class="ai-name">🤖 TravelReel AI</div>
-          Haan bhai! 🔥 Main hoon TravelReel AI — duniya ka sabse smart travel reel assistant!<br><br>
-          Main jaanta hoon:<br>
-          ✈️ 195+ countries ki travel tips<br>
-          🎬 Hollywood level editing techniques<br>
-          🎵 Worldwide music trends<br>
-          📱 Instagram, YouTube, TikTok algorithms<br>
-          🎨 Professional color grading<br>
-          🚁 Drone footage tips<br>
-          💒 Wedding reels<br>
-          🍕 Food vlogs<br><br>
-          Koi bhi sawaal poocho — main hoon yahan! 😎🔥
+          Haan bhai! 🔥 Main hoon TravelReel AI!<br><br>
+          Upar clips upload karo → AI tumhara complete editing plan banayega — kaunsi clip kahan lagani hai, kaunsa music, transitions, color grade sab kuch!<br><br>
+          Ya seedha mujhse koi bhi sawaal poocho! 😎✈️
         </div>
       </div>
       <div class="quick-btns" id="quick-btns">
-        <button class="quick-btn" onclick="sendQuick('Goa beach trip reel banani hai')">🏖️ Goa</button>
-        <button class="quick-btn" onclick="sendQuick('Manali mountains trip editing tips')">🏔️ Manali</button>
-        <button class="quick-btn" onclick="sendQuick('Dubai international trip reel')">🌆 Dubai</button>
+        <button class="quick-btn" onclick="sendQuick('Goa beach trip reel tips')">🏖️ Goa</button>
         <button class="quick-btn" onclick="sendQuick('Best music for travel reel')">🎵 Music</button>
         <button class="quick-btn" onclick="sendQuick('CapCut mein cinematic reel kaise banate hain')">✂️ CapCut</button>
         <button class="quick-btn" onclick="sendQuick('Instagram pe reel viral kaise karo')">📸 Viral Tips</button>
         <button class="quick-btn" onclick="sendQuick('Color grading kaise karte hain')">🎨 Color Grade</button>
-        <button class="quick-btn" onclick="sendQuick('Drone footage editing tips')">🚁 Drone</button>
+        <button class="quick-btn" onclick="sendQuick('Drone footage tips do')">🚁 Drone</button>
+        <button class="quick-btn" onclick="sendQuick('Wedding reel tips')">💒 Wedding</button>
         <button class="quick-btn" onclick="sendQuick('YouTube travel vlog tips')">▶️ YouTube</button>
-        <button class="quick-btn" onclick="sendQuick('Wedding reel banani hai tips do')">💒 Wedding</button>
       </div>
       <div class="chat-input-area">
-        <input type="text" class="chat-input" id="chat-input" placeholder="Koi bhi sawaal poocho — editing, music, travel, viral tips..." onkeydown="if(event.key==='Enter') sendMessage()" />
+        <input type="text" class="chat-input" id="chat-input" placeholder="Koi bhi sawaal poocho..." onkeydown="if(event.key==='Enter') sendMessage()" />
         <button class="send-btn" onclick="sendMessage()">➤</button>
       </div>
     </div>
@@ -137,31 +196,31 @@
 
   <section class="section">
     <div class="section-title">Kaise Kaam Karta Hai?</div>
-    <div class="section-sub">3 simple steps mein world class reel!</div>
+    <div class="section-sub">4 simple steps mein professional viral reel!</div>
     <div class="steps">
-      <div class="step-card"><div class="step-num">1</div><div class="step-emoji">📤</div><h3>Clips Upload Karo</h3><p>Apni saari travel clips upload karo — koi bhi format!</p></div>
-      <div class="step-card"><div class="step-num">2</div><div class="step-emoji">🤖</div><h3>AI Se Plan Lo</h3><p>AI tumhe complete reel plan dega — music, style, cuts, captions sab!</p></div>
-      <div class="step-card"><div class="step-num">3</div><div class="step-emoji">🔥</div><h3>Viral Reel Banao</h3><p>Plan follow karo aur dhamakedar viral reel banao!</p></div>
+      <div class="step-card"><div class="step-num">1</div><div class="step-emoji">📤</div><h3>Upload Karo</h3><p>Apni travel clips upload karo</p></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-emoji">🤖</div><h3>AI Plan Lo</h3><p>AI complete editing script banayega</p></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-emoji">✂️</div><h3>CapCut Mein Edit Karo</h3><p>Plan follow karo — step by step</p></div>
+      <div class="step-card"><div class="step-num">4</div><div class="step-emoji">🔥</div><h3>Viral Reel!</h3><p>Upload karo aur viral hojao!</p></div>
     </div>
   </section>
 
   <div class="features">
+    <div class="feature-pill"><span>🎯</span> AI Editing Plan</div>
     <div class="feature-pill"><span>🎵</span> Music Suggestions</div>
-    <div class="feature-pill"><span>✂️</span> CapCut & Premiere Tips</div>
-    <div class="feature-pill"><span>🎨</span> Color Grading Guide</div>
-    <div class="feature-pill"><span>🚁</span> Drone Footage Tips</div>
+    <div class="feature-pill"><span>✂️</span> CapCut Guide</div>
+    <div class="feature-pill"><span>🎨</span> Color Grading</div>
+    <div class="feature-pill"><span>🚁</span> Drone Tips</div>
     <div class="feature-pill"><span>📱</span> Instagram Algorithm</div>
-    <div class="feature-pill"><span>▶️</span> YouTube Growth</div>
     <div class="feature-pill"><span>🌍</span> 195+ Destinations</div>
     <div class="feature-pill"><span>💒</span> Wedding Reels</div>
-    <div class="feature-pill"><span>🍕</span> Food Vlogs</div>
+    <div class="feature-pill"><span>📥</span> Plan Download</div>
     <div class="feature-pill"><span>⚡</span> Instant AI Reply</div>
   </div>
 
   <footer>Made with ❤️ by <span>TravelReel AI</span> • © 2026 • World's Smartest Travel Reel Assistant</footer>
 
   <script>
-    // CLOUDINARY
     const CLOUD_NAME = 'ddjucfsw2';
     const UPLOAD_PRESET = 'travelreel_upload';
     let uploadedFiles = [];
@@ -178,142 +237,209 @@
         const fd = new FormData();
         fd.append('file', file); fd.append('upload_preset', UPLOAD_PRESET);
         try {
-          const r = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/video/upload`, { method: 'POST', body: fd });
+          const r = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/video/upload`, {method:'POST',body:fd});
           const d = await r.json();
-          uploadedFiles.push({ name: file.name, url: d.secure_url });
+          uploadedFiles.push({name:file.name, url:d.secure_url});
           const div = document.createElement('div');
           div.className = 'clip-item';
-          div.innerHTML = `<span>✅</span> ${file.name}`;
+          div.innerHTML = `<span class="ci">✅</span> ${file.name}`;
           document.getElementById('uploaded-clips').appendChild(div);
-          document.getElementById('progress-fill').style.width = ((i+1)/files.length*100) + '%';
-        } catch(e) { console.error(e); }
+          document.getElementById('progress-fill').style.width = ((i+1)/files.length*100)+'%';
+        } catch(e){console.error(e);}
       }
-      document.getElementById('status-msg').textContent = `🎉 ${files.length} clips upload ho gayi!`;
-      document.getElementById('generate-btn').style.display = 'block';
-      addAIMessage(`Wah bhai! 🔥 ${files.length} clips ready hain!\n\nAb batao:\n1️⃣ Kahan ki trip thi?\n2️⃣ Reel length — 15sec, 30sec ya 60sec?\n3️⃣ Vibe — Energetic ⚡, Cinematic 🎬, Chill 🌊 ya Romantic 💕?\n\nMain tumhara complete reel plan bana deta hoon — music, cuts, color grade sab! 😎`);
+      document.getElementById('status-msg').textContent = `🎉 ${files.length} clips ready! Ab niche editing plan banao!`;
+      document.getElementById('plan-section').style.display = 'block';
+      document.getElementById('plan-section').scrollIntoView({behavior:'smooth'});
+      addAIMessage(`Wah! 🔥 ${files.length} clips upload ho gayi!\n\nAb niche form fill karo:\n• Destination\n• Style — Energetic, Cinematic, Chill\n• Length — 15, 30, 60 sec\n\nAI tera complete editing plan banayega! 🎬`);
     });
 
-    function generateReel() {
-      addAIMessage('🎬 Perfect! Clips ready hain. AI assistant se baat karo niche — batao destination aur style, complete professional plan milega!');
-      document.querySelector('.chat-section').scrollIntoView({ behavior: 'smooth' });
+    function generatePlan() {
+      const dest = document.getElementById('destination').value || 'Travel';
+      const style = document.getElementById('style').value;
+      const len = document.getElementById('length').value;
+      const platform = document.getElementById('platform').value;
+      const clips = uploadedFiles.length || 10;
+
+      const styleData = {
+        energetic: { name: 'Energetic & Hype ⚡', music: 'Calm Down - Rema / Levitating - Dua Lipa / Kesariya', color: 'High contrast, vibrant, saturated', transition: 'Zoom In/Out, Whip Pan, Flash', speed: '1.2x-1.5x speed up action shots', cut: '1-2 seconds per clip' },
+        cinematic: { name: 'Cinematic & Moody 🎬', music: 'Time - Hans Zimmer / Experience - Einaudi / Cornfield Chase', color: 'Orange & Teal, warm highlights, cool shadows', transition: 'Smooth fade, J-cut, L-cut', speed: '0.5x slow motion scenic shots', cut: '3-5 seconds per clip' },
+        chill: { name: 'Chill & Aesthetic 🌊', music: 'Golden Hour - JVKE / Lo-fi beats / Photograph - Ed Sheeran', color: 'Soft, warm, airy — lifted blacks', transition: 'Gentle fade, dissolve', speed: '0.7x slightly slowed', cut: '2-3 seconds per clip' },
+        romantic: { name: 'Romantic & Soft 💕', music: 'Perfect - Ed Sheeran / Tere Bin / Raataan Lambiyan', color: 'Warm pinks, golden tones, dreamy', transition: 'Soft fade, blur transition', speed: '0.5x slow motion couple shots', cut: '3-4 seconds per clip' },
+        adventure: { name: 'Adventure & Epic 🏔️', music: 'Warriors - Imagine Dragons / The Nights - Avicii / Epic music', color: 'Dramatic, high contrast, moody', transition: 'Hard cut on beat, zoom reveal', speed: 'Mix of fast + slow motion', cut: '1-3 seconds per clip' }
+      };
+
+      const sd = styleData[style];
+      const clipsPerSec = parseInt(len) / (style === 'energetic' ? 1.5 : style === 'cinematic' ? 4 : 2.5);
+      const totalClips = Math.min(Math.ceil(clipsPerSec), clips);
+
+      const platformTips = {
+        instagram: '9:16 vertical • Max 90 sec • Hook in first 1.5 sec • Trending audio boost karta hai',
+        youtube: '9:16 vertical (Shorts) • Max 60 sec • Strong thumbnail • First 3 sec most important',
+        tiktok: '9:16 vertical • 7-15 sec highest viral • Trending sound must • Text overlay add karo'
+      };
+
+      const output = document.getElementById('script-output');
+      output.style.display = 'block';
+      output.innerHTML = `
+        <div class="script-card">
+          <h4>🎬 Teri Reel Plan — ${dest} Trip</h4>
+          <p><strong>Style:</strong> ${sd.name}<br>
+          <strong>Length:</strong> ${len} seconds<br>
+          <strong>Platform:</strong> ${platform.charAt(0).toUpperCase()+platform.slice(1)}<br>
+          <strong>Total Clips Use Karo:</strong> ${totalClips} clips</p>
+        </div>
+
+        <div class="script-card">
+          <h4>🎵 Music Selection</h4>
+          <p>${sd.music}<br><br>
+          💡 <strong>Pro Tip:</strong> ${platform === 'instagram' ? 'Instagram pe trending audio use karo — algorithm boost deta hai!' : platform === 'tiktok' ? 'TikTok pe viral sound use karo — FYP pe aane ka shortcut!' : 'YouTube Shorts ke liye copyright-free music use karo!'}</p>
+        </div>
+
+        <div class="script-card">
+          <h4>✂️ Editing Script — Clip by Clip</h4>
+          <p>
+          🎬 <strong>Clip 1 (0-3 sec) — HOOK:</strong> Sabse wow wali clip — sunset, action ya dramatic moment. Log pehle 2 sec mein scroll karte hain ya rukते hain!<br><br>
+          🎬 <strong>Clip 2-3 (3-8 sec) — BUILDUP:</strong> Location establish karo. Wide angle shots. ${dest} ki pehchaan wali jagah dikhao.<br><br>
+          🎬 <strong>Clip 4-6 (8-18 sec) — MAIN CONTENT:</strong> Best moments yahan! Activities, food, scenery, people — sab mix karo. ${sd.cut} per clip.<br><br>
+          🎬 <strong>Clip 7-8 (18-25 sec) — EMOTIONAL PEAK:</strong> Sabse emotional ya beautiful shot. ${style === 'cinematic' || style === 'romantic' ? 'Slow motion mein dikhao.' : 'Beat drop pe cut karo!'}<br><br>
+          🎬 <strong>Clip 9-${totalClips} (25-${len} sec) — GRAND ENDING:</strong> Epic ending clip — sunset, group shot ya beautiful panorama. Fade out.
+          </p>
+        </div>
+
+        <div class="script-card">
+          <h4>🎨 Color Grading (CapCut mein)</h4>
+          <p>${sd.color}<br><br>
+          CapCut settings:<br>
+          • Brightness: +8<br>
+          • Contrast: +15<br>
+          • Saturation: ${style === 'chill' ? '+5' : '+15'}<br>
+          • Warmth: ${style === 'cinematic' ? '+10' : style === 'chill' ? '+15' : '+20'}<br>
+          • Vignette: +20 (edges dark karo)<br>
+          • Sharpen: +10</p>
+        </div>
+
+        <div class="script-card">
+          <h4>🔄 Transitions</h4>
+          <p>${sd.transition}<br><br>
+          Speed: ${sd.speed}<br><br>
+          💡 <strong>Secret:</strong> Music ke beat pe cut karo — automatic professional feel aata hai!</p>
+        </div>
+
+        <div class="script-card">
+          <h4>📝 Caption & Hashtags (${platform.charAt(0).toUpperCase()+platform.slice(1)})</h4>
+          <p><strong>Caption template:</strong><br>
+          "${dest} ne dil jeet liya 🌟 [Trip highlight]. [Emotional line about the trip]. Save karo aur share karo agar tumhe bhi travel pasand hai! ✈️"<br><br>
+          <strong>Hashtags:</strong><br>
+          #${dest.replace(' ','')} #travel #travelreels #indiatravel #${style}vibes #reelsinstagram #travelgram #wanderlust #explore #${dest.toLowerCase().replace(' ','')}trip</p>
+        </div>
+
+        <div class="script-card">
+          <h4>📱 Platform Tips — ${platform.charAt(0).toUpperCase()+platform.slice(1)}</h4>
+          <p>${platformTips[platform]}</p>
+        </div>
+
+        <button class="download-script-btn" onclick="downloadPlan('${dest}', '${style}', '${len}')">📥 Editing Plan Download Karo (Text File)</button>
+      `;
     }
 
-    // MEGA AI BRAIN
+    function downloadPlan(dest, style, len) {
+      const content = `TRAVELREEL AI — EDITING PLAN
+================================
+Destination: ${dest}
+Style: ${style}
+Length: ${len} seconds
+Generated by: travelreel-ai.vercel.app
+
+EDITING SCRIPT:
+--------------
+Clip 1 (0-3 sec): HOOK — Sabse wow wali clip
+Clip 2-3 (3-8 sec): BUILDUP — Location establish
+Clip 4-6 (8-18 sec): MAIN CONTENT — Best moments
+Clip 7-8 (18-25 sec): EMOTIONAL PEAK
+Last clips: GRAND ENDING
+
+CAPCUT SETTINGS:
+---------------
+Brightness: +8
+Contrast: +15
+Saturation: +15
+Warmth: +20
+Vignette: +20
+
+Follow these steps in CapCut:
+1. Import clips
+2. Add music first
+3. Beat sync on
+4. Apply color grade
+5. Add transitions
+6. Export 9:16 ratio
+
+— TravelReel AI`;
+
+      const blob = new Blob([content], {type:'text/plain'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `TravelReel_Plan_${dest}.txt`;
+      a.click();
+    }
+
+    // MEGA AI CHAT
     const KB = {
-      greet: () => `Haan bhai! 🔥 Kya haal hai?\n\nMain hoon TravelReel AI — duniya ka sabse powerful travel reel assistant!\n\nMain help karta hoon:\n✈️ Travel destinations — 195+ countries\n🎬 Video editing — CapCut, Premiere, DaVinci\n🎵 Music selection — worldwide trends\n📱 Social media growth — Instagram, YouTube, TikTok\n🎨 Color grading — Hollywood level\n🚁 Drone footage tips\n💒 Wedding & event reels\n🍕 Food vlog tips\n\nBolo kya chahiye? 😎🔥`,
-
-      whoami: () => `Main hoon TravelReel AI! 🤖✈️\n\nBanaya gaya hai specifically travelers, content creators aur videographers ke liye.\n\nMeri knowledge:\n🌍 195+ countries ki travel tips\n🎬 Hollywood se leke Instagram tak — sab editing techniques\n🎵 Bollywood, Hollywood, Lo-fi, EDM — sab music genres\n📊 Social media algorithms — updated 2024\n🎨 Professional color grading techniques\n🚁 Drone cinematography\n\nKoi bhi sawaal — main hoon yahan! 💪`,
-
-      music: (loc) => `🎵 ${loc} ke liye Best Music Guide:\n\n⚡ ENERGETIC VIBES:\n• Calm Down — Rema & Selena Gomez\n• Levitating — Dua Lipa\n• Blinding Lights — The Weeknd\n• Kesariya — Brahmastra\n• Dynamite — BTS\n\n🌊 CHILL/AESTHETIC:\n• Golden Hour — JVKE\n• Die For You — The Weeknd\n• Lo-fi Hip Hop beats (YouTube free)\n• Tum Hi Ho — Acoustic version\n• Photograph — Ed Sheeran\n\n🎬 CINEMATIC:\n• Time — Hans Zimmer\n• Cornfield Chase — Interstellar\n• Experience — Ludovico Einaudi\n• A Sky Full of Stars — Coldplay\n\n💕 ROMANTIC:\n• Perfect — Ed Sheeran\n• All of Me — John Legend\n• Raataan Lambiyan\n• Tere Bin — Atif Aslam\n\n💡 PRO TIP: Jo Instagram pe 3+ reels mein same song dekho — wahi trending hai! Algorithm push karta hai! 🚀`,
-
-      capcut: () => `✂️ CapCut MASTER GUIDE — Professional Level:\n\n📥 SETUP:\n• 9:16 ratio set karo (Instagram/TikTok)\n• 16:9 (YouTube)\n• 1080p minimum, 4K best\n\n🎵 MUSIC FIRST:\n• Pehle music daalo\n• Beat markers lagao\n• Phir clips cut karo beats pe\n\n⚡ BEAT SYNC:\n• Auto Beat Sync feature on karo\n• Manual cuts — drop pe cut karo\n• BPM match karo clips ke length se\n\n🎨 COLOR GRADE:\n• Cinematic preset lagao\n• Brightness: +10, Contrast: +15\n• Saturation: +10, Warmth: +20\n• Vignette add karo edges pe\n\n✂️ TRANSITIONS:\n• Zoom In/Out — action shots\n• Whip Pan — fast transitions\n• Fade — emotional moments\n• J-Cut/L-Cut — smooth audio\n\n📝 TEXT & CAPTIONS:\n• Bold font, white color\n• Animation — Fade ya Typewriter\n• Location text — corner mein\n\n🚀 SPEED:\n• Scenic shots — 0.5x slow motion\n• Action — 1.5x speed up\n• Speed Ramp — dramatic effect\n\n💡 SECRET: Pehla 2 second sabse important — hook lagao! 🔥`,
-
-      premiere: () => `🎬 Adobe Premiere Pro — Pro Level Guide:\n\n⚙️ SETUP:\n• Sequence: 1920x1080, 30fps\n• Proxy footage use karo fast editing ke liye\n• Organize footage in bins\n\n✂️ EDITING FLOW:\n1. Rough cut — sab clip daalo\n2. Fine cut — best moments select karo\n3. Music sync — beat pe cuts\n4. Color grade — Lumetri Color\n5. Audio mix — music + ambient\n6. Titles & text\n7. Export\n\n🎨 COLOR GRADING:\n• Lumetri Color panel\n• LOG footage ke liye LUT lagao\n• Three-way color correction\n• Skin tones protect karo\n\n🔊 AUDIO:\n• Music: -12 to -18 dB\n• Ambient sound: -20 to -25 dB\n• Voice over: -6 dB\n• EQ aur Compressor use karo\n\n📤 EXPORT:\n• H.264 format\n• Bitrate: 8-15 Mbps\n• YouTube: 1080p60\n• Instagram: 9:16, max 90sec`,
-
-      davinci: () => `🎬 DaVinci Resolve — Hollywood Grade:\n\n🆓 FREE VERSION mein sab kuch milta hai!\n\n⭐ BEST FEATURES:\n• Color grading — industry best\n• Fusion — VFX effects\n• Fairlight — professional audio\n• Cut page — fast editing\n\n🎨 COLOR WORKFLOW:\n1. Camera RAW balance\n2. Exposure correction\n3. Primary color correction\n4. Creative look (LUT)\n5. Secondary corrections\n6. Final polish\n\n💡 NODES system use karo — non-destructive editing\n\n🎬 CINEMATIC LOOK:\n• Contrast: S-curve\n• Shadows: slight blue/green tint\n• Highlights: warm orange\n• Add film grain\n• Letterbox (2.35:1 ratio)\n\nYahi Hollywood movies mein use hota hai! 😎`,
-
-      instagram: () => `📱 Instagram VIRAL Formula — 2024 Updated:\n\n⏰ BEST POSTING TIMES:\n• India: 7-9am, 12-2pm, 7-10pm\n• Monday & Thursday sabse best\n• Avoid Sunday mornings\n\n🎯 ALGORITHM SECRETS:\n• First 30 min bahut important — comment karo, reply karo\n• Save rate > Like rate algorithm ko signal deta hai\n• Watch time — 80%+ complete watch chahiye\n• Share rate — DM shares count karte hain\n\n📝 CAPTION FORMULA:\n• Line 1: Hook (question ya bold statement)\n• Line 2-3: Story/context\n• Line 4: CTA (Save karo, Share karo)\n• Hashtags: 5-8 targeted ones\n\n#️⃣ HASHTAG STRATEGY:\n• 2 mega (1M+): #travel #reels\n• 3 medium (100K-1M): #indiatravel #travelreels\n• 3 small (10K-100K): #[yourcity]travel\n\n🎬 REEL TIPS:\n• 7-15 seconds — highest completion rate\n• Hook in first 1.5 seconds\n• Trending audio use karo\n• Closed captions add karo\n• Cover image attractive banao\n\n📊 GROWTH HACK:\n• Collaborate with similar creators\n• Reply to all comments in first hour\n• Story mein reel share karo\n• Location tag hamesha lagao`,
-
-      youtube: () => `▶️ YouTube Travel Channel — Complete Guide:\n\n📺 CHANNEL SETUP:\n• Niche choose karo: Budget travel, Luxury, Adventure, Solo\n• Channel art: 2560x1440px\n• Profile pic: Clear face ya logo\n• Banner: Travel photos collage\n\n🎬 VIDEO TYPES jo work karte hain:\n• "X Days in [City]" vlogs\n• "Budget Travel Guide"\n• "Hidden Gems" series\n• "Travel Mistakes" (high views!)\n• "Best Street Food" videos\n\n📊 SEO TIPS:\n• Title mein main keyword pehle\n• Description mein 200+ words\n• Tags: 10-15 relevant keywords\n• Chapters add karo (timestamps)\n• Cards aur End screens use karo\n\n💰 MONETIZATION:\n• 1000 subscribers + 4000 watch hours\n• AdSense: $1-5 per 1000 views\n• Sponsorships: Hotels, airlines, gear\n• Affiliate links: Booking.com, Amazon\n\n⚡ GROWTH TIPS:\n• Upload consistency: 1-2 per week\n• Shorts banao — free views!\n• Community posts use karo\n• Collaborate with travel channels`,
-
-      tiktok: () => `🎵 TikTok Travel Content — Viral Strategy:\n\n⚡ WHY TIKTOK:\n• Fastest growing platform\n• Algorithm sabse fair hai\n• New account bhi viral ho sakta hai!\n\n🎬 CONTENT TYPES:\n• POV travel videos\n• "Things to do in X" series\n• Travel hacks\n• Before/After destination\n• Day in the life vlogs\n\n🎵 MUSIC:\n• Trending sounds use karo — FYP boost milta hai\n• Original audio bhi work karta hai\n• Duet aur Stitch feature use karo\n\n📈 ALGORITHM:\n• Completion rate most important\n• First video bhi viral ho sakta hai\n• Post 3-5 times per day initially\n• Engage with comments fast\n\n💡 SECRET:\n• 7-15 second videos best perform karte hain\n• Hook: First word important\n• Text overlay add karo — many watch without sound`,
-
-      colorgrade: () => `🎨 COLOR GRADING — Hollywood Secrets:\n\n🎬 CINEMATIC ORANGE & TEAL LOOK:\n• Shadows: Teal/Blue shift\n• Highlights: Orange/Warm shift\n• Midtones: Balanced\n• Result: Hollywood blockbuster look!\n\n🌅 GOLDEN HOUR LOOK:\n• Highlights: +warm (+15 orange)\n• Shadows: -cool (-10 blue)\n• Saturation: +15\n• Contrast: +20\n• Crush blacks slightly\n\n❄️ COOL CINEMATIC:\n• Overall blue tint\n• Desaturate slightly\n• High contrast\n• Crushed blacks\n• Used in thriller/mystery films\n\n🏖️ BEACH/TROPICAL:\n• Boost aqua/cyan in highlights\n• Warm sandy tones\n• High saturation\n• Bright aur airy feel\n\n🏔️ MOUNTAIN/MOODY:\n• Desaturated look\n• Blue/grey tones\n• High contrast\n• Fog effect add karo\n\n🛠️ FREE TOOLS:\n• CapCut: Built-in presets\n• DaVinci Resolve: Free, industry standard\n• Lightroom Mobile: Free LUTs\n• VSCO: Mobile color grading\n\n💡 PRO TIP: Shoot in flat/LOG profile agar camera allow kare — grading room bahut zyada milti hai! 📷`,
-
-      drone: () => `🚁 DRONE FOOTAGE — Pro Cinematography Guide:\n\n🎬 ESSENTIAL DRONE SHOTS:\n• Reveal shot: Ground se sky tak\n• Top-down (birds eye): Locations\n• Orbit: Subject ke around circle\n• Tracking shot: Subject follow karo\n• Hyperlapse: Time lapse + movement\n• Low altitude: Ground level flying\n\n📷 CAMERA SETTINGS:\n• Shutter: 2x frame rate rule (30fps = 1/60)\n• ISO: As low as possible\n• ND filters: ND4, ND8, ND16, ND32\n• White balance: Manual set karo\n• Picture profile: Flat/LOG\n\n🌤️ BEST CONDITIONS:\n• Golden hour: 1 hour after sunrise/sunset\n• Overcast: Soft diffused light\n• Avoid: Midday harsh sun\n• Wind: Max 20-25 kmph\n\n✏️ EDITING DRONE FOOTAGE:\n• Speed ramp: Fast to slow on reveal\n• Color grade: Flat LOG needs grading\n• Stabilize: Built-in stabilization\n• Crop: Slightly for cleaner framing\n\n⚠️ LEGAL TIPS (India):\n• DGCA registration mandatory\n• No fly zones: Airports, military, crowds\n• Permission needed in many cities\n• Max height: 120 meters (green zones)\n\n💡 Budget drones: DJI Mini 3, Holy Stone — Rs 15,000-50,000`,
-
-      wedding: () => `💒 WEDDING REEL — Complete Guide:\n\n🎬 MUST-HAVE SHOTS:\n• Bride/Groom getting ready\n• First look reaction\n• Ceremony moments\n• Ring exchange close-up\n• First kiss\n• First dance\n• Family emotional moments\n• Reception celebration\n• Couple portraits\n• Detail shots (flowers, rings, dress)\n\n🎵 MUSIC SELECTION:\n• Emotional: Tum Hi Ho, Perfect, A Thousand Years\n• Celebratory: Badtameez Dil, Gallan Goodiyaan\n• Cinematic: Instrumental versions\n• Trending: Current Bollywood wedding songs\n\n✂️ EDITING STYLE:\n• Mix slow motion + normal speed\n• Emotional moments: Slow, soft music\n• Celebration: Fast cuts, upbeat music\n• Color: Warm tones, romantic feel\n• Duration: 3-5 minutes ideal\n\n🎨 COLOR GRADE:\n• Warm golden tones\n• Soft skin tones\n• Slightly lifted blacks (airy feel)\n• Pastel look for daytime\n• Rich warm tones for evening\n\n💡 PRO TIPS:\n• Multiple cameras use karo\n• Backup footage hamesha\n• Golden hour portraits mandatory\n• Candid moments > Posed shots`,
-
-      food: () => `🍕 FOOD VLOG & REEL — Complete Guide:\n\n📱 FOOD CONTENT TYPES:\n• Street food tours\n• Restaurant reviews\n• Recipe videos\n• "Best food in X city"\n• Mukbang style\n• Aesthetic food shots\n\n📷 FILMING TIPS:\n• Natural light best hai food ke liye\n• Window ke paas shoot karo\n• Overhead (flat lay) shots\n• 45-degree angle shots\n• Close-up texture shots\n• Steam/sizzle capture karo\n\n🎨 COLOR GRADE FOR FOOD:\n• Warm tones — food appetizing lagti hai\n• Boost oranges aur reds\n• Slightly increase saturation\n• Avoid blue tones — food unappealing lagti hai\n\n✂️ EDITING:\n• Fast cuts — bite moments\n• Slow motion — pour/drizzle shots\n• ASMR sounds use karo\n• Reaction shots include karo\n\n📝 CAPTIONS:\n• Food name aur location\n• Price (people love this!)\n• Rating out of 10\n• "Link in bio" for full review\n\n🔥 VIRAL FOOD CONTENT:\n• Cheese pulls\n• Satisfying cuts\n• Huge portion reveals\n• Unique/unusual foods\n• Local hidden gems`,
-
-      goa: () => `🏖️ GOA REEL — Complete Package:\n\n📸 MUST SHOOT LOCATIONS:\n• Baga, Calangute beaches (North Goa)\n• Palolem, Agonda (South Goa — peaceful)\n• Dudhsagar Waterfalls\n• Old Goa Churches (UNESCO)\n• Anjuna Flea Market\n• Sunset at Fort Aguada\n• Spice Plantation\n\n🎬 SHOT LIST:\n• Sunrise at beach (5:30am — empty beach!)\n• Water sports — parasailing, jet ski\n• Fresh seafood shots\n• Scooter riding through streets\n• Night market vibes\n• Beach shack hanging\n• Colorful Portuguese architecture\n\n🎵 MUSIC:\n• Tropical house music\n• DJ Alok tracks\n• "Levels" — Avicii\n• Bollywood beach songs\n\n🎨 COLOR GRADE:\n• Aqua blue water\n• Warm sandy tones\n• High saturation\n• Bright aur vibrant\n\n✂️ EDITING:\n• Fast cuts for water sports\n• Slow motion for sunset\n• 30-45 second reel\n\n📝 CAPTION IDEAS:\n"Goa never disappoints 🌊☀️"\n"Lost in paradise 🏖️"\n"Sun, sand and good vibes ✨"`,
-
-      manali: () => `🏔️ MANALI/MOUNTAINS REEL — Epic Guide:\n\n📸 LOCATIONS TO SHOOT:\n• Rohtang Pass (snow!)\n• Solang Valley\n• Hadimba Temple\n• Old Manali streets\n• Beas River\n• Kullu Valley\n• Chandrakhani Pass trek\n\n🎬 SHOT IDEAS:\n• Snow throwing (classic!)\n• Mountain reveal shots\n• Cafe cozy shots with mountain view\n• River crossing/adventure\n• Apple orchard\n• Local Himachali culture\n• Night sky — stars (no light pollution!)\n\n🎵 MUSIC:\n• Epic orchestral — "He's a Pirate"\n• The Nights — Avicii\n• Imagine Dragons — Warriors\n• Acoustic folk music\n• "Mountains" — Hans Zimmer\n\n🎨 COLOR GRADE:\n• Cool blue tones for snow\n• Desaturated, moody feel\n• High contrast\n• Teal shadows\n\n✂️ EDITING:\n• Slow motion snow shots\n• Epic wide angle reveals\n• 45-60 second reel works best\n\n⚠️ TIPS:\n• Battery drain fast in cold — extra batteries lo\n• ND filters important for snow\n• Golden hour: 6-7am aur 5-6pm`,
-
-      dubai: () => `🌆 DUBAI REEL — Luxury Content Guide:\n\n📸 ICONIC LOCATIONS:\n• Burj Khalifa (sunrise/sunset)\n• Dubai Mall\n• Palm Jumeirah\n• Desert Safari\n• Old Dubai (Gold Souk, Spice Souk)\n• Dubai Frame\n• Jumeirah Beach\n• Miracle Garden (Oct-April)\n\n🎬 SHOT IDEAS:\n• Burj Khalifa light show (9pm, 10pm)\n• Desert dunes at golden hour\n• Luxury hotel shots\n• Dubai Metro time lapse\n• Abra (traditional boat) ride\n• Skydiving (if budget allows!)\n• Night city lights from above\n\n🎵 MUSIC:\n• Luxury vibes — Drake, The Weeknd\n• "Starboy"\n• Arabic music blend\n• Cinematic epic music\n\n🎨 COLOR GRADE:\n• Warm golden tones\n• High contrast\n• Rich shadows\n• Luxury feel\n\n📝 CAPTION:\n"Dubai hits different ✨🌆"\n"Living the dream 🚀"\n"7 star life 💎"`,
-
-      thailand: () => `🇹🇭 THAILAND REEL — Complete Guide:\n\n📸 MUST VISIT:\n• Bangkok temples (Wat Arun, Wat Pho)\n• Phi Phi Islands\n• Chiang Mai Night Bazaar\n• Phuket beaches\n• Pai — hippie town\n• Floating market\n• Tiger Temple\n\n🎬 CONTENT IDEAS:\n• Tuk-tuk ride\n• Street food tour\n• Temple hopping\n• Elephant sanctuary\n• Island hopping boat ride\n• Thai boxing show\n• Night market shopping\n\n🎵 MUSIC:\n• Tropical/Thai fusion\n• "Anywhere" — Rita Ora\n• Lo-fi chill beats\n• EDM — Zedd style\n\n🎨 COLOR:\n• Vibrant, colorful\n• Temple gold tones\n• Beach aqua blue\n\n💰 BUDGET TIP:\n• Visa on arrival — free (15 days)\n• Average cost: ₹60,000-1,00,000 for 7 days`,
-
-      monetize: () => `💰 CONTENT SE PAISE KAMANE KA COMPLETE GUIDE:\n\n📱 INSTAGRAM:\n• 10K followers: Brand deals shuru\n• ₹5,000-20,000 per sponsored post\n• Travel brands, hotels, airlines\n• Affiliate links (Amazon, Booking.com)\n• Instagram Badges (live mein)\n\n▶️ YOUTUBE:\n• 1000 subs + 4000 hours = Monetization\n• AdSense: $1-5 per 1000 views\n• Sponsorships: $200-2000 per video\n• Channel memberships\n• Super Thanks\n\n🎵 TIKTOK:\n• TikTok Creator Fund\n• Brand partnerships\n• Live gifts\n• Affiliate marketing\n\n💼 FREELANCING:\n• Video editing: ₹500-5000 per video\n• Social media management: ₹10,000-30,000/month\n• Travel content creation for brands\n• Wedding videography: ₹20,000-2,00,000\n\n🚀 FASTEST WAY:\n1. Niche choose karo\n2. Consistent content — 3x/week\n3. Engage with audience\n4. DM brands directly at 5K followers\n5. Use media kit\n\n💡 REALISTIC TIMELINE:\n• Month 1-3: Content banao\n• Month 4-6: 1000+ followers\n• Month 7-12: First brand deal\n• Year 2: Full time income possible!`,
-
-      error: () => {
-        const arr = [
-          `Bhai ekdum sahi sawaal! 🔥 Thoda aur detail mein batao — kahan ki trip thi? Main specific tips de sakta hoon! ✈️`,
-          `Interesting! 😎 Yeh batao — Instagram ke liye hai ya YouTube? Dono ke liye alag strategy hoti hai! Kaunsa platform? 📱`,
-          `Wah bhai! 🎬 Pehle yeh bolo — tumhara style kya hai? Energetic ⚡, Chill 🌊, Cinematic 🎬 ya Romantic 💕? Batao! 😄`,
-          `Ekdum sahi pooch rahe ho! 💪 Destination batao — phir main complete shot list, music aur editing plan dunga! 🌍`,
-          `Fire question! 🔥 Kaunsa software use karte ho editing ke liye — CapCut, Premiere ya DaVinci? Ussi ke hisaab se tips dunga! ✂️`,
-        ];
-        return arr[Math.floor(Math.random()*arr.length)];
-      }
+      greet: () => `Haan bhai! 🔥 Kya haal hai?\n\nMain hoon TravelReel AI — duniya ka sabse powerful travel reel assistant!\n\nUpar clips upload karo → AI ka editing plan lo → CapCut mein follow karo → Viral reel ready! 🚀\n\nYa koi bhi sawaal poocho! 😎`,
+      music: (loc) => `🎵 ${loc} ke liye Best Music:\n\n⚡ ENERGETIC:\n• Calm Down — Rema\n• Levitating — Dua Lipa\n• Kesariya — Brahmastra\n• Blinding Lights — The Weeknd\n\n🌊 CHILL:\n• Golden Hour — JVKE\n• Lo-fi beats (YouTube free)\n• Photograph — Ed Sheeran\n\n🎬 CINEMATIC:\n• Time — Hans Zimmer\n• Experience — Ludovico Einaudi\n• A Sky Full of Stars\n\n💡 TIP: Instagram pe trending audio use karo — algorithm push karta hai! 🚀`,
+      capcut: () => `✂️ CapCut MASTER GUIDE:\n\n1️⃣ Music pehle daalo\n2️⃣ Beat Sync ON karo\n3️⃣ Clips beats pe cut karo\n4️⃣ Speed ramp — scenic shots 0.5x\n5️⃣ Color grade — Cinematic preset\n6️⃣ Transitions — Zoom ya Whip Pan\n7️⃣ Text — location names\n8️⃣ 9:16 ratio mein export\n\n💡 SECRET: Pehla 2 second sabse important — hook lagao! 🔥`,
+      instagram: () => `📱 Instagram VIRAL Formula:\n\n⏰ Best time: 7-9am, 7-10pm (India)\n\n🎯 Algorithm secrets:\n• First 30 min engage karo\n• Save rate important hai\n• 80%+ watch time chahiye\n• Trending audio use karo\n\n📝 Caption: Hook → Story → CTA\n\n#️⃣ Hashtags: 5-8 targeted\n\n💡 Hack: Friends ko tag karo, story pe share karo! 🚀`,
+      colorgrade: () => `🎨 COLOR GRADING — Hollywood Style:\n\n🎬 CINEMATIC (Orange & Teal):\n• Shadows: Teal tint\n• Highlights: Warm orange\n• Result: Blockbuster look!\n\n🌅 GOLDEN HOUR:\n• Warmth: +20\n• Saturation: +15\n• Contrast: +20\n\nCapCut settings:\n• Brightness: +8\n• Contrast: +15\n• Saturation: +15\n• Warmth: +20\n• Vignette: +20\n\n🛠️ Free tool: DaVinci Resolve — industry best, FREE! 🔥`,
+      drone: () => `🚁 DRONE TIPS:\n\n🎬 ESSENTIAL SHOTS:\n• Reveal: Ground se sky\n• Orbit: Subject ke around\n• Top-down: Birds eye view\n• Tracking: Subject follow\n\n📷 SETTINGS:\n• Shutter: 2x frame rate\n• ND filters use karo\n• LOG profile agar ho\n\n✏️ EDITING:\n• Speed ramp on reveal\n• Color grade needed\n\n⚠️ India mein DGCA registration mandatory! 📋`,
+      wedding: () => `💒 WEDDING REEL GUIDE:\n\n📸 MUST SHOTS:\n• Getting ready moments\n• First look reaction\n• Ring exchange close-up\n• First dance\n• Emotional family moments\n\n🎵 MUSIC:\n• Tum Hi Ho\n• Perfect — Ed Sheeran\n• Badtameez Dil (celebration)\n\n🎨 COLOR: Warm golden tones\n\n✂️ Duration: 3-5 minutes ideal\n\n💡 Tip: Candid moments > Posed shots! 😊`,
+      youtube: () => `▶️ YouTube GROWTH GUIDE:\n\n📺 VIDEO TYPES jo viral hote hain:\n• "X Days in [City]"\n• "Budget Travel Guide"\n• "Hidden Gems"\n• "Travel Mistakes"\n\n📊 SEO:\n• Title mein keyword pehle\n• Description 200+ words\n• Chapters add karo\n\n💰 MONETIZE:\n• 1000 subs + 4000 hours\n• AdSense + sponsorships\n• Affiliate links\n\n⚡ Shorts banao — free views! 🚀`,
+      goa: () => `🏖️ GOA REEL PLAN:\n\n📸 BEST SPOTS:\n• Sunset at Fort Aguada\n• Palolem Beach (peaceful)\n• Dudhsagar Falls\n• Old Goa Churches\n\n🎬 SHOT IDEAS:\n• Sunrise at empty beach (5:30am!)\n• Water sports action\n• Seafood shots\n• Night market vibes\n\n🎵 MUSIC: Tropical house, DJ Alok\n🎨 COLOR: Aqua blue, warm sandy\n✂️ Duration: 30-45 sec`,
+      manali: () => `🏔️ MANALI REEL PLAN:\n\n📸 BEST SPOTS:\n• Rohtang Pass snow\n• Solang Valley\n• Hadimba Temple\n• Beas River\n\n🎬 SHOTS:\n• Snow throwing (classic!)\n• Mountain sunrise reveal\n• Cozy cafe with mountain view\n\n🎵 MUSIC: The Nights — Avicii, Epic orchestral\n🎨 COLOR: Cool blue, moody\n✂️ Duration: 45-60 sec`,
+      dubai: () => `🌆 DUBAI REEL PLAN:\n\n📸 MUST VISIT:\n• Burj Khalifa light show (9pm)\n• Palm Jumeirah\n• Desert Safari golden hour\n• Old Dubai souks\n\n🎵 MUSIC: Starboy — The Weeknd, Luxury R&B\n🎨 COLOR: Rich warm tones, high contrast\n📝 Caption: "Dubai hits different ✨"\n✂️ Duration: 30-45 sec`,
+      monetize: () => `💰 CONTENT SE PAISE KAMAO:\n\n📱 INSTAGRAM:\n• 10K followers: Brand deals\n• ₹5,000-20,000 per post\n\n▶️ YOUTUBE:\n• AdSense: $1-5 per 1000 views\n• Sponsorships: Hotels, airlines\n\n💼 FREELANCING:\n• Video editing: ₹500-5000/video\n• Wedding: ₹20,000-2,00,000\n\n🚀 TIMELINE:\n• Month 1-3: Content banao\n• Month 4-6: 1000 followers\n• Month 7-12: First brand deal\n• Year 2: Full time income!`,
     };
 
     function getResponse(msg) {
       const m = msg.toLowerCase();
-      if (m.match(/^(hi+|hello|hey|hlo|helo|haan|han|salaam|assalam|namaste|namaskar|sup|wassup)/)) return KB.greet();
-      if (m.match(/(kaun ho|who are you|kya ho|tumhara naam|about you|kya hai tu)/)) return KB.whoami();
-      if (m.match(/(kaise ho|kya haal|how are you|kaisa hai)/)) return `Ekdum mast hoon bhai! 🔥 Ready hoon tumhari reel viral karne ke liye!\n\nTum batao — kya plan hai? Koi nai trip? 😄✈️`;
-      if (m.match(/(thank|shukriya|dhanyawad|bahut acha|badiya|badhiya|mast|perfect|zabardast)/)) return `Arre yaar! 😄 Yeh toh mera kaam hai! 🔥\n\nAur kuch puchna hai? Main hoon yahan — editing, music, travel, viral tips — sab ke liye! 💪`;
-      if (m.match(/(music|song|gaana|audio|sound|beat|track)/)) { const loc = m.includes('goa')?'Goa':m.includes('manali')?'Manali':m.includes('dubai')?'Dubai':m.includes('thailand')?'Thailand':m.includes('kashmir')?'Kashmir':'Travel'; return KB.music(loc); }
+      if (m.match(/^(hi+|hello|hey|hlo|helo|haan|han|salaam|namaste|wassup)/)) return KB.greet();
+      if (m.match(/(kaun ho|who are you|kya ho|tumhara naam)/)) return `Main hoon TravelReel AI! 🤖✈️\n\nDuniya ka sabse smart travel reel assistant!\n\nMeri speciality:\n🌍 195+ countries\n🎬 CapCut, Premiere, DaVinci\n🎵 Worldwide music\n📱 Instagram, YouTube, TikTok\n🎨 Color grading\n🚁 Drone tips\n💒 Wedding reels\n\nKuch bhi poocho! 💪`;
+      if (m.match(/(kaise ho|how are you|kya haal)/)) return `Ekdum mast hoon bhai! 🔥 Teri reel viral karne ke liye ready!\n\nTu bata — kya plan hai? 😄✈️`;
+      if (m.match(/(thank|shukriya|bahut acha|badiya|mast|perfect|zabardast)/)) return `Arre yaar! 😄 Yeh toh mera kaam hai!\n\nAur kuch puchna hai? Editing, music, travel — sab ke liye hoon! 💪🔥`;
+      if (m.match(/(music|song|gaana|audio|beat|track)/)) { const loc = m.includes('goa')?'Goa':m.includes('manali')?'Manali':m.includes('dubai')?'Dubai':m.includes('kashmir')?'Kashmir':'Travel'; return KB.music(loc); }
       if (m.match(/(capcut|cap cut)/)) return KB.capcut();
-      if (m.match(/(premiere|adobe|after effect)/)) return KB.premiere();
-      if (m.match(/(davinci|da vinci|resolve)/)) return KB.davinci();
-      if (m.match(/(instagram|insta|reel viral|ig |views|followers|reach|algorithm)/)) return KB.instagram();
+      if (m.match(/(premiere|adobe)/)) return `🎬 Adobe Premiere Pro:\n\n⚙️ SETUP: 1920x1080, 30fps\n\n✂️ WORKFLOW:\n1. Rough cut\n2. Fine cut\n3. Music sync\n4. Color grade (Lumetri)\n5. Audio mix\n6. Export H.264\n\n🎨 COLOR: Lumetri Color panel\n🔊 AUDIO: Music -12dB, Voice -6dB\n\n💡 Proxy footage use karo fast editing ke liye!`;
+      if (m.match(/(davinci|resolve)/)) return `🎬 DaVinci Resolve — FREE & Hollywood Grade!\n\n⭐ Best features:\n• Color grading — industry best\n• Fusion — VFX effects\n• Fairlight — pro audio\n\n🎨 COLOR WORKFLOW:\n1. Exposure fix\n2. Primary correction\n3. Creative LUT\n4. Secondary tweaks\n\n🎬 CINEMATIC: S-curve contrast + Orange/Teal grade\n\nYahi Hollywood use karta hai! 😎`;
+      if (m.match(/(instagram|viral|views|followers|reach|algorithm)/)) return KB.instagram();
       if (m.match(/(youtube|yt |vlog|channel)/)) return KB.youtube();
-      if (m.match(/(tiktok|tik tok)/)) return KB.tiktok();
-      if (m.match(/(color|colour|grade|grading|lut|tone|filter)/)) return KB.colorgrade();
-      if (m.match(/(drone|aerial|dji|fly)/)) return KB.drone();
-      if (m.match(/(wedding|shaadi|vivah|bride|groom)/)) return KB.wedding();
-      if (m.match(/(food|khana|restaurant|street food|vlog food)/)) return KB.food();
-      if (m.match(/(goa|beach|samudra)/)) return KB.goa();
-      if (m.match(/(manali|shimla|himachal|mountain|pahad|snow|rohtang)/)) return KB.manali();
-      if (m.match(/(dubai|uae|burj)/)) return KB.dubai();
-      if (m.match(/(thailand|bangkok|phuket|pattaya)/)) return KB.thailand();
-      if (m.match(/(paise|money|earn|income|monetize|kamao|revenue)/)) return KB.monetize();
-      if (m.match(/(editing|edit kaise|software|tool)/)) return `🎬 Video Editing Software Guide:\n\n📱 MOBILE (Free):\n• CapCut — Best for reels\n• VN Video Editor — Advanced features\n• InShot — Simple aur fast\n• Kinemaster — Professional\n\n💻 DESKTOP (Free):\n• DaVinci Resolve — Hollywood grade, FREE\n• OpenShot — Beginner friendly\n• Kdenlive — Advanced, free\n\n💻 DESKTOP (Paid):\n• Adobe Premiere Pro — Industry standard\n• Final Cut Pro — Mac only\n• Vegas Pro — Windows\n\n🏆 MY RECOMMENDATION:\n• Beginner: CapCut (mobile)\n• Intermediate: DaVinci Resolve (free!)\n• Professional: Adobe Premiere Pro\n\nKaunsa use karte ho tum? 😄`;
-      if (m.match(/(thumbnail|cover|preview image)/)) return `🖼️ THUMBNAIL — Complete Guide:\n\n✅ WHAT WORKS:\n• Bright, high contrast image\n• Face with expression (surprise/joy)\n• Bold text — readable on mobile\n• Arrow ya circle to draw attention\n• Consistent branding/style\n\n❌ AVOID:\n• Dark ya blurry images\n• Too much text\n• Boring landscape shots\n• Misleading thumbnails\n\n🛠️ FREE TOOLS:\n• Canva — Best for thumbnails\n• CapCut — Built-in thumbnail maker\n• Snapseed — Photo editing\n• Adobe Express — Free version\n\n📐 SIZES:\n• YouTube: 1280x720px\n• Instagram: 1080x1920px (cover)\n\n💡 A/B TEST:\n• 2 thumbnails banao\n• Better performer rakho\n• CTR 5%+ achha hai YouTube pe! 🎯`;
-      if (m.match(/(kashmir|leh|ladakh|jammu)/)) return `🏔️ KASHMIR/LEH REEL — Dreamland Guide:\n\n📸 LOCATIONS:\n• Dal Lake sunrise\n• Shikara boat ride\n• Gulmarg snow\n• Pangong Lake (Leh)\n• Magnetic Hill\n• Nubra Valley\n• Zanskar Valley\n\n🎬 SHOTS:\n• Houseboat on Dal Lake\n• Shikara reflections\n• Mountain road trip\n• Snow-capped peaks\n• Local Kashmiri culture\n• Saffron fields\n\n🎵 MUSIC:\n• Classical Kashmiri folk\n• Epic orchestral\n• "Kashmir" theme\n• Soft acoustic\n\n🎨 COLOR:\n• Rich, moody tones\n• Green valleys\n• Blue lake reflections\n• Snow white contrast\n\n⚠️ TRAVEL TIP:\n• Best time: March-October\n• Inner Line Permit for Leh\n• Altitude sickness ke liye prepared raho!`;
-      if (m.match(/(gopro|action cam|hero)/)) return `🎥 GoPro Tips — Action Footage Guide:\n\n⚙️ SETTINGS:\n• 4K 60fps — best quality\n• HyperSmooth ON — stabilization\n• Wide angle — most used\n• Linear — less distortion\n• SuperPhoto — automatic best mode\n\n🎬 SHOTS:\n• POV — helmet/chest mount\n• Underwater shots\n• Timelapse\n• Slow motion (2.7K 240fps)\n• Selfie stick shots\n\n✂️ EDITING:\n• GoPro Quik app — free, auto edit\n• Import to CapCut for music\n• Stabilize in post if needed\n• Color grade: GoPro footage needs warmth\n\n💡 TIPS:\n• Spare batteries must\n• Waterproof case for water\n• Anti-fog inserts use karo\n• Lens protector mandatory`;
-      return KB.error();
+      if (m.match(/(tiktok|tik tok)/)) return `🎵 TikTok Viral Strategy:\n\n⚡ WHY TIKTOK:\n• Fastest growth\n• New account bhi viral ho sakta hai!\n\n🎬 CONTENT:\n• POV travel videos\n• "Things to do in X"\n• Travel hacks\n• Day in the life\n\n📈 ALGORITHM:\n• Completion rate most important\n• Post 3-5x per day initially\n• Trending sounds must\n\n💡 7-15 sec videos best! 🔥`;
+      if (m.match(/(color|colour|grade|grading|lut|filter)/)) return KB.colorgrade();
+      if (m.match(/(drone|aerial|dji)/)) return KB.drone();
+      if (m.match(/(wedding|shaadi|bride|groom)/)) return KB.wedding();
+      if (m.match(/(food|khana|restaurant|street food)/)) return `🍕 FOOD CONTENT GUIDE:\n\n📷 FILMING:\n• Natural window light\n• Overhead + 45-degree shots\n• Close-up texture shots\n• Steam/sizzle capture karo\n\n🎨 COLOR: Warm tones — food appetizing lagti hai!\n\n✂️ EDITING:\n• Fast cuts — bite moments\n• Slow motion — pour shots\n• ASMR sounds use karo\n\n🔥 VIRAL: Cheese pulls, satisfying cuts, huge portions!`;
+      if (m.match(/(goa|beach)/)) return KB.goa();
+      if (m.match(/(manali|shimla|himachal|mountain|snow)/)) return KB.manali();
+      if (m.match(/(dubai|burj)/)) return KB.dubai();
+      if (m.match(/(thailand|bangkok|phuket)/)) return `🇹🇭 THAILAND REEL:\n\n📸 BEST: Phi Phi Islands, Bangkok temples, Chiang Mai\n\n🎬 CONTENT: Tuk-tuk ride, street food tour, island hopping\n\n🎵 MUSIC: Tropical/EDM\n🎨 COLOR: Vibrant, colorful\n\n💰 BUDGET: ₹60,000-1,00,000 for 7 days`;
+      if (m.match(/(kashmir|leh|ladakh)/)) return `🏔️ KASHMIR/LEH:\n\n📸 BEST: Dal Lake, Pangong Lake, Gulmarg\n\n🎬 SHOTS: Shikara ride, mountain roads, snow fields\n\n🎵 MUSIC: Epic orchestral, folk music\n🎨 COLOR: Rich moody tones\n\n⚠️ Best time: April-October\n💡 Battery drain fast in cold — extra lo!`;
+      if (m.match(/(paise|money|earn|income|monetize)/)) return KB.monetize();
+      if (m.match(/(gopro|action cam)/)) return `🎥 GOPRO TIPS:\n\n⚙️ SETTINGS: 4K 60fps, HyperSmooth ON\n\n🎬 SHOTS: POV, underwater, timelapse\n\n✂️ EDIT: GoPro Quik app free hai!\n\n💡 Spare batteries must — GoPro fast drain karta hai!`;
+      if (m.match(/(thumbnail|cover|preview)/)) return `🖼️ THUMBNAIL GUIDE:\n\n✅ WORKS: Bright image, face with expression, bold text\n❌ AVOID: Dark, blurry, too much text\n\n🛠️ FREE TOOLS: Canva, CapCut\n\n📐 SIZES:\n• YouTube: 1280x720\n• Instagram: 1080x1920\n\n💡 Good thumbnail = 2x more views!`;
+      const defaults = [
+        `Bhai ekdum sahi! 🔥 Destination batao — phir complete shot list, music aur editing plan dunga! ✈️`,
+        `Interesting! 😎 Instagram ke liye hai ya YouTube? Dono ke liye alag strategy! Batao! 📱`,
+        `Wah bhai! 🎬 Style kya chahiye — Energetic ⚡, Cinematic 🎬, Chill 🌊 ya Romantic 💕? Batao!`,
+        `Fire question! 🔥 Upar clips upload karo — AI automatic editing plan banayega! Ya aur detail mein batao! 😄`,
+      ];
+      return defaults[Math.floor(Math.random()*defaults.length)];
     }
 
     const chatMessages = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
-
-    function addAIMessage(text) {
-      const div = document.createElement('div');
-      div.className = 'msg ai';
-      div.innerHTML = `<div class="ai-name">🤖 TravelReel AI</div>${text.replace(/\n/g,'<br>')}`;
-      chatMessages.appendChild(div);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-    function addUserMessage(text) {
-      const div = document.createElement('div');
-      div.className = 'msg user';
-      div.textContent = text;
-      chatMessages.appendChild(div);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-    function showTyping() {
-      const div = document.createElement('div');
-      div.className = 'msg typing'; div.id = 'typing';
-      div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
-      chatMessages.appendChild(div);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-    function sendMessage() {
-      const text = chatInput.value.trim();
-      if (!text) return;
-      chatInput.value = '';
-      addUserMessage(text);
-      document.getElementById('quick-btns').style.display = 'none';
-      showTyping();
-      setTimeout(() => {
-        document.getElementById('typing')?.remove();
-        addAIMessage(getResponse(text));
-      }, 700 + Math.random()*500);
-    }
-    function sendQuick(text) { chatInput.value = text; sendMessage(); }
+    function addAIMessage(t) { const d=document.createElement('div'); d.className='msg ai'; d.innerHTML=`<div class="ai-name">🤖 TravelReel AI</div>${t.replace(/\n/g,'<br>')}`; chatMessages.appendChild(d); chatMessages.scrollTop=chatMessages.scrollHeight; }
+    function addUserMessage(t) { const d=document.createElement('div'); d.className='msg user'; d.textContent=t; chatMessages.appendChild(d); chatMessages.scrollTop=chatMessages.scrollHeight; }
+    function showTyping() { const d=document.createElement('div'); d.className='msg typing'; d.id='typing'; d.innerHTML='<div class="typing-dots"><span></span><span></span><span></span></div>'; chatMessages.appendChild(d); chatMessages.scrollTop=chatMessages.scrollHeight; }
+    function sendMessage() { const t=chatInput.value.trim(); if(!t) return; chatInput.value=''; addUserMessage(t); document.getElementById('quick-btns').style.display='none'; showTyping(); setTimeout(()=>{ document.getElementById('typing')?.remove(); addAIMessage(getResponse(t)); },700+Math.random()*500); }
+    function sendQuick(t) { chatInput.value=t; sendMessage(); }
   </script>
 </body>
 </html>
